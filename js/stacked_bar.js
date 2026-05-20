@@ -10,7 +10,7 @@ function renderBar() {
       "x": {
         "field": "State",
         "type": "nominal",
-        "sort": "-y",
+        "sort": { "op": "count", "order": "descending" },
         "axis": { "labelColor": "#3a2a10", "titleColor": "#3a2a10", "title": "State" }
       },
       "y": {
