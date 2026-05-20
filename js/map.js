@@ -14,7 +14,7 @@ const COLORS = {
   }
 };
 
-// let ALL_DATA = [];
+let ALL_DATA = [];
 
 fetch("data/schools.csv")
   .then(r => r.text())
