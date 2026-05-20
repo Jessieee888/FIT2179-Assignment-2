@@ -48,7 +48,7 @@ function applyFilters() {
   updateStats(data);
   updateLegend(col);
   renderMap(data, col);
-  renderBar(data)
+  renderBar(data);
 }
 
 function updateStats(data) {
@@ -152,5 +152,6 @@ function renderBar(data = ALL_DATA) {
     },
     "config": { "view": { "stroke": null } }
   };
-  vegaEmbed("#vis-bar", spec, { actions: false });
+  vegaEmbed("#vis-bar", spec, { actions: false })
+  .catch(error => console.error("Bar chart error:", error));
 }
