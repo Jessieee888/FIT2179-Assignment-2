@@ -24,7 +24,7 @@ function renderBar() {
         "type": "nominal",
         "scale": {
           "domain": ["Government", "Catholic", "Independent"],
-          "range":  ["#5a3e8a", "#8a3e20", "#1a6a40"]
+          "range":  ["#5a3e8a", "#e03e1a", "#1a6a40"]
         },
         "legend": { "title": "Sector", "labelColor": "#3a2a10", "titleColor": "#3a2a10" }
       },
