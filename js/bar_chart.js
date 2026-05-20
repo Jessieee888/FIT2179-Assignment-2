@@ -15,7 +15,7 @@ function renderRemoteBar() {
       "y": {
         "field": "ABS Remoteness Area Name",
         "type": "nominal",
-        "sort": ["-x"],
+        "sort": { "op": "count", "order": "descending" },
         "axis": { "labelColor": "#3a2a10", "titleColor": "#3a2a10", "title": null }
       },
       "color": {

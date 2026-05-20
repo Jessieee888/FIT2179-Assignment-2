@@ -10,6 +10,7 @@ function renderHeatmap() {
       "x": {
         "field": "School Sector",
         "type": "nominal",
+        "sort": ["Government", "Catholic", "Independent"],
         "axis": { "labelColor": "#3a2a10", "titleColor": "#3a2a10", "title": "Sector", "labelAngle": 0 }
       },
       "y": {
@@ -25,9 +26,9 @@ function renderHeatmap() {
         "legend": { "title": "Schools", "labelColor": "#3a2a10", "titleColor": "#3a2a10" }
       },
       "tooltip": [
-        { "field": "School Sector",           "title": "Sector" },
-        { "field": "ABS Remoteness Area Name","title": "Remoteness" },
-        { "aggregate": "count",               "title": "Number of Schools" }
+        { "field": "School Sector",            "title": "Sector" },
+        { "field": "ABS Remoteness Area Name", "title": "Remoteness" },
+        { "aggregate": "count",                "title": "Number of Schools" }
       ]
     },
     "config": { "view": { "stroke": "#c8b89a" } }
