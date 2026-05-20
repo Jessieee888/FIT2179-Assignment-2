@@ -48,6 +48,7 @@ function applyFilters() {
   updateStats(data);
   updateLegend(col);
   renderMap(data, col);
+  renderBar(data)
 }
 
 function updateStats(data) {
@@ -113,7 +114,7 @@ function renderMap(data, colorField) {
   vegaEmbed("#vis", spec, { actions: false });
 }
 
-function renderBar() {
+function renderBar(data = ALL_DATA) {
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "width": "container",
