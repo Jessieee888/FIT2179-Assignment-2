@@ -244,31 +244,3 @@ body {
   font-size: 0.7rem;
   color: #7a6a50;
 }
-
-/* TWO COLUMN LAYOUT */
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1px 1fr;
-  gap: 0;
-  padding: 0.8rem 2rem 0.8rem;
-  border-top: 1px solid #c8b89a;
-}
-
-.col-chart {
-  padding: 0 1rem;
-}
-
-.col-divider {
-  background: #c8b89a;
-  margin: 0;
-}
-
-.chart-note {
-  font-size: 0.78rem;
-  font-style: italic;
-  color: #5a4a30;
-  line-height: 1.5;
-  margin-top: 0.6rem;
-  border-top: 1px solid #c8b89a;
-  padding-top: 0.4rem;
-}
