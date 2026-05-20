@@ -4,7 +4,7 @@
   "height": 400,
   "background": "#f2ece0",
   "data": {
-    "url": "data/schools.csv",
+    "url": "../data/schools.csv",
     "format": { "type": "csv" }
   },
   "mark": { "type": "bar" },
