@@ -229,3 +229,16 @@ body {
   font-size: 0.7rem;
   color: #7a6a50;
 }
+
+.section-divider {
+  border-top: 3px double #1a1209;
+  margin: 1.5rem 0 0;
+}
+
+.subheadline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}

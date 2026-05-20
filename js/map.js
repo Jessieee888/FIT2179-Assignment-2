@@ -124,3 +124,8 @@ function renderMap(data, colorField) {
 
   vegaEmbed("#vis", spec, { actions: false });
 }
+
+// Stacked bar chart
+fetch("vega/stacked_bar.json")
+  .then(r => r.json())
+  .then(spec => vegaEmbed("#vis-bar", spec, { actions: false }));
