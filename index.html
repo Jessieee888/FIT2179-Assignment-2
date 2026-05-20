@@ -4,21 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Schools Across Australia</title>
-
-  <!-- Vega-Lite -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- MASTHEAD -->
   <div class="masthead">
     <div class="masthead-date">Tuesday, 20 May 2026 &nbsp;&middot;&nbsp; Education Edition &nbsp;&middot;&nbsp; Australia</div>
     <hr class="masthead-rule">
@@ -29,14 +22,12 @@
 
   <div class="wrap">
 
-    <!-- HEADLINE -->
     <div class="headline-section">
       <div class="kicker">Special Report &nbsp;&middot;&nbsp; School Geography</div>
       <h1 class="headline">Where Are Australia's 11,000 Schools?<br>A Nation Mapped by Education</h1>
       <p class="deck">From the dense corridors of Sydney's inner suburbs to the vast outback of Western Australia, every dot on this map tells the story of a school &mdash; government, Catholic, or independent &mdash; and the community it serves.</p>
     </div>
 
-    <!-- STATS -->
     <div class="stats-row">
       <div class="stat"><div class="num" id="s-total">-</div><div class="lbl">Schools nationally</div></div>
       <div class="stat"><div class="num" style="color:#5a3e8a" id="s-gov">-</div><div class="lbl">Government</div></div>
@@ -44,7 +35,6 @@
       <div class="stat"><div class="num" style="color:#1a6a40" id="s-ind">-</div><div class="lbl">Independent</div></div>
     </div>
 
-    <!-- CONTROLS -->
     <div class="controls-bar">
       <div class="ctrl-group">
         <label>Sector:</label>
@@ -82,18 +72,27 @@
       </div>
     </div>
 
-    <!-- MAP -->
     <div class="map-wrap">
       <div id="vis"></div>
     </div>
 
-    <!-- LEGEND -->
+    
     <div class="legend-bar">
       <span class="legend-label" id="legend-label">Sector</span>
       <div class="legend-items" id="legend"></div>
     </div>
 
-    <!-- BYLINE -->
+    <!-- STACKED BAR CHART -->
+    <div class="section-divider"></div>
+    <div class="headline-section">
+      <div class="kicker">By State &nbsp;&middot;&nbsp; Sector Breakdown</div>
+      <h2 class="subheadline">Government Schools Dominate Every State</h2>
+      <p class="deck">Across all eight states and territories, government schools make up the majority, but the share of Catholic and independent schools varies significantly by region.</p>
+    </div>
+    <div class="map-wrap">
+      <div id="vis-bar"></div>
+    </div>
+
     <div class="byline-bar">
       <span class="byline">By Jesslyn Susanto, 36680567 &nbsp;&middot;&nbsp; Monash University, 2026</span>
       <span class="source">Source: ACARA School Location Dataset 2025 &nbsp;&middot;&nbsp; acara.edu.au</span>
@@ -102,5 +101,6 @@
   </div>
 
   <script src="js/map.js"></script>
+  <script src="js/stacked_bar.js"></script>
 </body>
 </html>

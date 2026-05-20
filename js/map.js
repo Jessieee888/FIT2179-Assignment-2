@@ -1,4 +1,3 @@
-// Color schemes
 const COLORS = {
   "School Sector": {
     domain: ["Government", "Catholic", "Independent"],
@@ -14,7 +13,6 @@ const COLORS = {
   }
 };
 
-// Load all school data once, then filter in JS
 let ALL_DATA = [];
 
 fetch("data/schools.csv")
@@ -23,7 +21,6 @@ fetch("data/schools.csv")
     const lines = text.trim().split("\n");
     const headers = lines[0].split(",");
     ALL_DATA = lines.slice(1).map(line => {
-      // handle quoted fields (e.g. school names with commas)
       const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
       const obj = {};
       headers.forEach((h, i) => {
@@ -32,9 +29,9 @@ fetch("data/schools.csv")
       return obj;
     });
     applyFilters();
+    renderBar();
   });
 
-// Filter + re-render
 function applyFilters() {
   const sec   = document.getElementById("sel-sector").value;
   const typ   = document.getElementById("sel-type").value;
@@ -52,7 +49,6 @@ function applyFilters() {
   renderMap(data, col);
 }
 
-// Update stat numbers
 function updateStats(data) {
   document.getElementById("s-total").textContent = data.length.toLocaleString();
   document.getElementById("s-gov").textContent   = data.filter(d => d["School Sector"] === "Government").length.toLocaleString();
@@ -60,7 +56,6 @@ function updateStats(data) {
   document.getElementById("s-ind").textContent   = data.filter(d => d["School Sector"] === "Independent").length.toLocaleString();
 }
 
-// Update legend
 function updateLegend(colorField) {
   const c = COLORS[colorField];
   document.getElementById("legend-label").textContent =
@@ -73,10 +68,8 @@ function updateLegend(colorField) {
   ).join("");
 }
 
-// Render Vega-Lite map
 function renderMap(data, colorField) {
   const c = COLORS[colorField];
-
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "width": "container",
@@ -89,12 +82,7 @@ function renderMap(data, colorField) {
           "format": { "type": "topojson", "feature": "countries" }
         },
         "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
-        "mark": {
-          "type": "geoshape",
-          "fill": "#e8dfc8",
-          "stroke": "#a89070",
-          "strokeWidth": 0.6
-        }
+        "mark": { "type": "geoshape", "fill": "#e8dfc8", "stroke": "#a89070", "strokeWidth": 0.6 }
       },
       {
         "data": { "values": data },
@@ -110,10 +98,10 @@ function renderMap(data, colorField) {
             "legend": null
           },
           "tooltip": [
-            { "field": "School Name",            "title": "School" },
-            { "field": "School Sector",          "title": "Sector" },
-            { "field": "School Type",            "title": "Type" },
-            { "field": "State",                  "title": "State" },
+            { "field": "School Name",             "title": "School" },
+            { "field": "School Sector",           "title": "Sector" },
+            { "field": "School Type",             "title": "Type" },
+            { "field": "State",                   "title": "State" },
             { "field": "ABS Remoteness Area Name","title": "Remoteness" }
           ]
         }
@@ -121,6 +109,5 @@ function renderMap(data, colorField) {
     ],
     "config": { "view": { "stroke": null } }
   };
-
   vegaEmbed("#vis", spec, { actions: false });
 }

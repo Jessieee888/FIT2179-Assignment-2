@@ -80,6 +80,14 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.subheadline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
 .deck {
   font-size: 0.95rem;
   font-style: italic;
@@ -158,14 +166,15 @@ body {
   gap: 0.4rem;
 }
 
-/* MAP */
+/* MAP / CHART WRAP */
 .map-wrap {
   padding: 0.8rem 2rem 0.3rem;
   border-top: 1px solid #c8b89a;
 }
 
-#vis {
+#vis, #vis-bar {
   width: 100%;
+  min-height: 10px;
 }
 
 /* LEGEND */
@@ -206,6 +215,12 @@ body {
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
+}
+
+/* SECTION DIVIDER */
+.section-divider {
+  border-top: 3px double #1a1209;
+  margin: 1.5rem 0 0;
 }
 
 /* BYLINE */
