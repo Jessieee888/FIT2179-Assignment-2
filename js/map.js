@@ -1,7 +1,7 @@
 const COLORS = {
   "School Sector": {
     domain: ["Government", "Catholic", "Independent"],
-    range:  ["#5a3e8a", "#e03e1a", "#1a6a40"]
+    range:  ["#5a3e8a", "#8a3e20", "#1a6a40"]
   },
   "School Type": {
     domain: ["Primary", "Secondary", "Combined"],
@@ -30,6 +30,8 @@ fetch("data/schools.csv")
     });
     applyFilters();
     renderBar();
+    renderRemoteBar();
+    renderHeatmap();
   });
 
 function applyFilters() {
