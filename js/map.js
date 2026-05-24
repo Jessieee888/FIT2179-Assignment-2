@@ -30,8 +30,8 @@ fetch("data/schools.csv")
     });
     applyFilters();
     renderBar();
-    renderRemoteBar(); // FIX: was never called
-    renderHeatmap();   // FIX: was never called
+    renderRemoteBar();
+    renderHeatmap();
   });
 
 function applyFilters() {
