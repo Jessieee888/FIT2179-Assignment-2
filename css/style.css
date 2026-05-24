@@ -18,14 +18,12 @@ body {
   text-align: center;
   padding: 0.6rem 2rem;
 }
-
 .masthead-date {
   font-size: 0.73rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #5a4a30;
 }
-
 .masthead-title {
   font-family: 'Playfair Display', serif;
   font-size: clamp(2rem, 5vw, 3.8rem);
@@ -34,13 +32,11 @@ body {
   color: #1a1209;
   margin: 0.2rem 0;
 }
-
 .masthead-rule {
   border: none;
   border-top: 1px solid #1a1209;
   margin: 0.3rem 0;
 }
-
 .masthead-tagline {
   font-size: 0.78rem;
   font-style: italic;
@@ -59,7 +55,6 @@ body {
 .headline-section {
   padding: 1.2rem 2rem 0.8rem;
 }
-
 .kicker {
   font-size: 0.72rem;
   text-transform: uppercase;
@@ -71,7 +66,6 @@ body {
   padding-top: 0.2rem;
   margin-bottom: 0.5rem;
 }
-
 .headline {
   font-family: 'Playfair Display', serif;
   font-size: clamp(1.5rem, 4vw, 2.5rem);
@@ -79,7 +73,6 @@ body {
   line-height: 1.15;
   margin-bottom: 0.5rem;
 }
-
 .subheadline {
   font-family: 'Playfair Display', serif;
   font-size: clamp(1.1rem, 3vw, 1.8rem);
@@ -87,7 +80,6 @@ body {
   line-height: 1.2;
   margin-bottom: 0.5rem;
 }
-
 .deck {
   font-size: 0.95rem;
   font-style: italic;
@@ -104,24 +96,18 @@ body {
   grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid #c8b89a;
 }
-
 .stat {
   padding: 0.7rem 1rem;
   border-right: 1px solid #c8b89a;
   text-align: center;
 }
-
-.stat:last-child {
-  border-right: none;
-}
-
+.stat:last-child { border-right: none; }
 .stat .num {
   font-family: 'Playfair Display', serif;
   font-size: 1.7rem;
   font-weight: 700;
   line-height: 1;
 }
-
 .stat .lbl {
   font-size: 0.68rem;
   text-transform: uppercase;
@@ -140,7 +126,6 @@ body {
   flex-wrap: wrap;
   align-items: center;
 }
-
 .controls-bar label {
   font-size: 0.72rem;
   text-transform: uppercase;
@@ -148,7 +133,6 @@ body {
   color: #5a4a30;
   font-weight: 600;
 }
-
 .controls-bar select {
   background: #f2ece0;
   color: #1a1209;
@@ -159,7 +143,6 @@ body {
   font-family: 'Source Serif 4', serif;
   cursor: pointer;
 }
-
 .ctrl-group {
   display: flex;
   align-items: center;
@@ -171,7 +154,6 @@ body {
   padding: 0.8rem 2rem 0.3rem;
   border-top: 1px solid #c8b89a;
 }
-
 #vis, #vis-bar {
   width: 100%;
   min-height: 10px;
@@ -186,7 +168,6 @@ body {
   flex-wrap: wrap;
   align-items: center;
 }
-
 .legend-label {
   font-size: 0.7rem;
   text-transform: uppercase;
@@ -194,13 +175,11 @@ body {
   color: #6a5a40;
   font-weight: 600;
 }
-
 .legend-items {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
 }
-
 .legend-item {
   display: flex;
   align-items: center;
@@ -209,7 +188,6 @@ body {
   color: #3a2a10;
   font-style: italic;
 }
-
 .legend-dot {
   width: 10px;
   height: 10px;
@@ -223,6 +201,29 @@ body {
   margin: 1.5rem 0 0;
 }
 
+/* TWO COLUMN LAYOUT */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  padding: 0.8rem 2rem;
+  border-top: 1px solid #c8b89a;
+}
+.col-chart {
+  padding: 0 1rem;
+}
+.col-divider {
+  background: #c8b89a;
+}
+.chart-note {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: #5a4a30;
+  line-height: 1.5;
+  margin-top: 0.6rem;
+  border-top: 1px solid #c8b89a;
+  padding-top: 0.4rem;
+}
+
 /* BYLINE */
 .byline-bar {
   padding: 0.5rem 2rem;
@@ -233,13 +234,11 @@ body {
   flex-wrap: wrap;
   gap: 0.4rem;
 }
-
 .byline {
   font-size: 0.73rem;
   color: #5a4a30;
   font-style: italic;
 }
-
 .source {
   font-size: 0.7rem;
   color: #7a6a50;
