@@ -9,7 +9,7 @@ const COLORS = {
   },
   "ABS Remoteness Area Name": {
     domain: ["Major Cities", "Inner Regional", "Outer Regional", "Remote", "Very Remote"],
-    range:  ["#1a1a5a", "#2a6a2a", "#8a6a1a", "#8a3a1a", "#6a1a1a"]
+    range:  ["#4f83b5","#76a96b","#d98abc","#e8c981","#8a3f3f"]
   }
 };
 
