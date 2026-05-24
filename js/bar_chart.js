@@ -13,13 +13,13 @@ function renderRemoteBar() {
         "axis": { "labelColor": "#3a2a10", "titleColor": "#3a2a10", "title": "Number of Schools", "gridColor": "#d8ccb0" }
       },
       "y": {
-        "field": "ABS Remoteness Area Name",
+        "field": "Area Remoteness",
         "type": "nominal",
         "sort": { "op": "count", "order": "descending" },
         "axis": { "labelColor": "#3a2a10", "titleColor": "#3a2a10", "title": null }
       },
       "color": {
-        "field": "ABS Remoteness Area Name",
+        "field": "Area Remoteness",
         "type": "nominal",
         "scale": {
           "domain": ["Major Cities", "Inner Regional", "Outer Regional", "Remote", "Very Remote"],
@@ -28,7 +28,7 @@ function renderRemoteBar() {
         "legend": null
       },
       "tooltip": [
-        { "field": "ABS Remoteness Area Name", "title": "Remoteness" },
+        { "field": "Area Remoteness", "title": "Remoteness" },
         { "aggregate": "count", "title": "Number of Schools" }
       ]
     },

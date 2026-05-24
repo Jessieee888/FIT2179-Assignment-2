@@ -104,7 +104,7 @@ function renderMap(data, colorField) {
             { "field": "School Sector",           "title": "Sector" },
             { "field": "School Type",             "title": "Type" },
             { "field": "State",                   "title": "State" },
-            { "field": "ABS Remoteness Area Name","title": "Remoteness" }
+            { "field": "Area Remoteness",         "title": "Remoteness" }
           ]
         }
       }
