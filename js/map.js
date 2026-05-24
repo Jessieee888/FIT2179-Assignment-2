@@ -5,7 +5,7 @@ const COLORS = {
   },
   "School Type": {
     domain: ["Primary", "Secondary", "Combined"],
-    range:  ["#2a5a8a", "#8a2a50", "#5a6a1a"]
+    range:  ["#008b8b", "#ca8d7f", "#1c1d87"]
   },
   "ABS Remoteness Area Name": {
     domain: ["Major Cities", "Inner Regional", "Outer Regional", "Remote", "Very Remote"],
