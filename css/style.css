@@ -154,7 +154,7 @@ body {
   padding: 0.8rem 2rem 0.3rem;
   border-top: 1px solid #c8b89a;
 }
-#vis, #vis-bar, #vis-grouped-bar, #vis-remote-bar, #vis-heatmap {
+#vis, #vis-bar, #vis-grouped-bar, #vis-remote-bar, #vis-heatmap, #vis-donut-chart {
   width: 100%;
   min-height: 10px;
 }
@@ -252,4 +252,78 @@ body {
 .source {
   font-size: 0.7rem;
   color: #7a6a50;
+}
+
+/* DONUT SECTION */
+.donut-section {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 0;
+  padding: 1.2rem 2rem 1.2rem;
+  border-top: 1px solid #c8b89a;
+  align-items: center;
+}
+.donut-text {
+  padding-right: 2rem;
+  border-right: 1px solid #c8b89a;
+}
+.donut-text .deck {
+  margin-bottom: 1rem;
+}
+.donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+.donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.83rem;
+  color: #3a2a10;
+  font-style: italic;
+}
+.donut-legend-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.donut-chart-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 1.5rem;
+}
+#vis-donut {
+  position: relative;
+  width: 260px;
+  height: 260px;
+}
+.donut-centre {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  /* nudge to account for vega-embed padding */
+  margin-top: -4px;
+}
+.donut-total {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1a1209;
+  line-height: 1;
+}
+.donut-label {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #6a5a40;
+  margin-top: 0.2rem;
 }

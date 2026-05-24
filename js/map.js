@@ -33,6 +33,7 @@ fetch("data/schools.csv")
     renderRemoteBar();
     renderHeatmap();
     renderGroupedBar();
+    renderDonutChart();
   });
 
 function applyFilters() {
