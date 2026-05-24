@@ -5,11 +5,11 @@ const COLORS = {
   },
   "School Type": {
     domain: ["Primary", "Secondary", "Combined"],
-    range:  ["#2a5a8a", "#8a2a50", "#5a6a1a"]
+    range:  ["#0097a7", "#982654", "#a87cc9"]
   },
-  "ABS Remoteness Area Name": {
+  "Area Remoteness": {
     domain: ["Major Cities", "Inner Regional", "Outer Regional", "Remote", "Very Remote"],
-    range:  ["#1a1a5a", "#2a6a2a", "#8a6a1a", "#8a3a1a", "#6a1a1a"]
+    range:  ["#4f83b5","#76a96b","#d98abc","#e8c981","#8a3f3f"]
   }
 };
 
