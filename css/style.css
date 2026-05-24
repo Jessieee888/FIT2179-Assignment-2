@@ -154,9 +154,19 @@ body {
   padding: 0.8rem 2rem 0.3rem;
   border-top: 1px solid #c8b89a;
 }
-#vis, #vis-bar, #vis-remote-bar, #vis-heatmap {
+#vis, #vis-bar, #vis-grouped-bar, #vis-remote-bar, #vis-heatmap {
   width: 100%;
   min-height: 10px;
+}
+
+/* CHART FOOTER NOTE (below full-width charts) */
+.chart-footer {
+  padding: 0 2rem 0.8rem;
+}
+.chart-footer .chart-note {
+  border-top: 1px solid #c8b89a;
+  padding-top: 0.4rem;
+  margin-top: 0;
 }
 
 /* LEGEND */
@@ -243,4 +253,3 @@ body {
   font-size: 0.7rem;
   color: #7a6a50;
 }
-
