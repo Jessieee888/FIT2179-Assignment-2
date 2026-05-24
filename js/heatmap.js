@@ -14,7 +14,7 @@ function renderHeatmap() {
         "axis": { "labelColor": "#3a2a10", "titleColor": "#3a2a10", "title": "Sector", "labelAngle": 0 }
       },
       "y": {
-        "field": "Area Remoteness",
+        "field": "ABS Remoteness Area Name",
         "type": "nominal",
         "sort": ["Major Cities", "Inner Regional", "Outer Regional", "Remote", "Very Remote"],
         "axis": { "labelColor": "#3a2a10", "titleColor": "#3a2a10", "title": null }
@@ -27,7 +27,7 @@ function renderHeatmap() {
       },
       "tooltip": [
         { "field": "School Sector",            "title": "Sector" },
-        { "field": "Area Remoteness", "title": "Remoteness" },
+        { "field": "ABS Remoteness Area Name", "title": "Remoteness" },
         { "aggregate": "count",                "title": "Number of Schools" }
       ]
     },

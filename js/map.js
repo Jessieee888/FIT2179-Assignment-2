@@ -7,7 +7,7 @@ const COLORS = {
     domain: ["Primary", "Secondary", "Combined"],
     range:  ["#008b8b", "#ca8d7f", "#1c1d87"]
   },
-  "Area Remoteness": {
+  "ABS Remoteness Area Name": {
     domain: ["Major Cities", "Inner Regional", "Outer Regional", "Remote", "Very Remote"],
     range:  ["#4f83b5","#76a96b","#d98abc","#e8c981","#8a3f3f"]
   }
