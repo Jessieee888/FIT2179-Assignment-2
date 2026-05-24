@@ -23,7 +23,7 @@ function renderRemoteBar() {
         "type": "nominal",
         "scale": {
           "domain": ["Major Cities", "Inner Regional", "Outer Regional", "Remote", "Very Remote"],
-          "range":  ["#1a1a5a", "#2a6a2a", "#8a6a1a", "#e03e1a", "#6a1a1a"]
+          "range":  ["#3a7ab5", "#2a6a2a", "#c8a040", "#c06030", "#6a1a1a"]
         },
         "legend": null
       },
