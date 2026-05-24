@@ -154,7 +154,7 @@ body {
   padding: 0.8rem 2rem 0.3rem;
   border-top: 1px solid #c8b89a;
 }
-#vis, #vis-bar {
+#vis, #vis-bar, #vis-remote-bar, #vis-heatmap {
   width: 100%;
   min-height: 10px;
 }
@@ -244,7 +244,3 @@ body {
   color: #7a6a50;
 }
 
-#vis-heatmap, #vis-remote-bar {
-  width: 100%;
-  min-height: 10px;
-}
