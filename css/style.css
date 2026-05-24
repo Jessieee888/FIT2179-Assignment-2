@@ -243,3 +243,8 @@ body {
   font-size: 0.7rem;
   color: #7a6a50;
 }
+
+#vis-heatmap, #vis-remote-bar {
+  width: 100%;
+  min-height: 10px;
+}
