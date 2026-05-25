@@ -1,70 +1,97 @@
-const STATE_NAME_MAP = {
-  "NSW": "New South Wales",
-  "VIC": "Victoria",
-  "QLD": "Queensland",
-  "WA":  "Western Australia",
-  "SA":  "South Australia",
-  "TAS": "Tasmania",
-  "ACT": "Australian Capital Territory",
-  "NT":  "Northern Territory"
-};
-
 function renderChoropleth() {
-  // Count schools per state
-  const counts = {};
-  Object.values(STATE_NAME_MAP).forEach(n => counts[n] = 0);
+  // Count schools per state from ALL_DATA
+  const stateCounts = {};
   ALL_DATA.forEach(d => {
-    const full = STATE_NAME_MAP[d["State"]];
-    if (full) counts[full]++;
+    const s = d["State"];
+    if (s) stateCounts[s] = (stateCounts[s] || 0) + 1;
   });
 
-  // Attach school_count at the TOP LEVEL of each feature (not nested under properties)
-  // so Vega-Lite can access it directly without dot-notation issues
-  const features = STATE_FEATURES
-    .filter(f => f.geometry !== null && counts[f.properties.STE_NAME21] !== undefined)
-    .map(f => ({
-      ...f,
-      school_count: counts[f.properties.STE_NAME21] || 0,
-      state_name:   f.properties.STE_NAME21
-    }));
-
-  const spec = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": "container",
-    "height": 480,
-    "background": "#f2ece0",
-    "data": { "values": features },
-    "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
-    "mark": {
-      "type": "geoshape",
-      "stroke": "#a89070",
-      "strokeWidth": 0.8
-    },
-    "encoding": {
-      "color": {
-        "field": "school_count",
-        "type": "quantitative",
-        "scale": {
-          "scheme": "oranges",
-          "domain": [0, 3500]
-        },
-        "legend": {
-          "title": "Number of Schools",
-          "titleColor": "#3a2a10",
-          "labelColor": "#3a2a10",
-          "titleFontSize": 11,
-          "labelFontSize": 10,
-          "orient": "bottom-right",
-          "gradientLength": 140
-        }
-      },
-      "tooltip": [
-        { "field": "state_name",   "title": "State",            "type": "nominal" },
-        { "field": "school_count", "title": "Number of Schools", "type": "quantitative" }
-      ]
-    },
-    "config": { "view": { "stroke": null } }
+  // State name → abbr + area (km²)
+  const stateInfo = {
+    "New South Wales":            { abbr: "NSW", area: 800797.66 },
+    "Victoria":                   { abbr: "VIC", area: 227496.25 },
+    "Queensland":                 { abbr: "QLD", area: 1730171.22 },
+    "South Australia":            { abbr: "SA",  area: 984231.42 },
+    "Western Australia":          { abbr: "WA",  area: 2526632.48 },
+    "Tasmania":                   { abbr: "TAS", area: 68017.54 },
+    "Northern Territory":         { abbr: "NT",  area: 1348134.49 },
+    "Australian Capital Territory":{ abbr: "ACT", area: 2358.13 }
   };
 
-  vegaEmbed("#vis-choropleth", spec, { actions: false });
+  // Build lookup: full name → density
+  const densityLookup = {};
+  Object.entries(stateInfo).forEach(([name, info]) => {
+    const count = stateCounts[info.abbr] || 0;
+    densityLookup[name] = {
+      density: parseFloat((count / info.area * 1000).toFixed(3)),
+      count: count,
+      abbr: info.abbr
+    };
+  });
+
+  // Inject density into GeoJSON features
+  fetch("data/state_boundaries.json")
+    .then(r => r.json())
+    .then(geojson => {
+      geojson.features.forEach(f => {
+        const name = f.properties.STE_NAME21;
+        const info = densityLookup[name];
+        if (info) {
+          f.properties.density = info.density;
+          f.properties.count   = info.count;
+          f.properties.abbr    = info.abbr;
+        } else {
+          f.properties.density = null;
+        }
+      });
+
+      // Filter out non-state features
+      geojson.features = geojson.features.filter(f => f.properties.density !== null && f.properties.density !== undefined);
+
+      const spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "width": "container",
+        "height": 480,
+        "background": "#f2ece0",
+        "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
+        "layer": [
+          {
+            "data": {
+              "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
+              "format": { "type": "topojson", "feature": "countries" }
+            },
+            "mark": {
+              "type": "geoshape",
+              "fill": "#e8dfc8",
+              "stroke": "#a89070",
+              "strokeWidth": 0.5
+            }
+          },
+          {
+            "data": { "values": geojson.features, "format": { "type": "json", "property": "features" } },
+            "mark": { "type": "geoshape", "stroke": "#f2ece0", "strokeWidth": 1 },
+            "encoding": {
+              "color": {
+                "field": "properties.density",
+                "type": "quantitative",
+                "scale": { "scheme": "oranges" },
+                "legend": {
+                  "title": "Schools per 1,000 km²",
+                  "labelColor": "#3a2a10",
+                  "titleColor": "#3a2a10"
+                }
+              },
+              "tooltip": [
+                { "field": "properties.abbr",    "title": "State" },
+                { "field": "properties.count",   "title": "Total Schools" },
+                { "field": "properties.density", "title": "Schools per 1,000 km²" }
+              ]
+            }
+          }
+        ],
+        "config": { "view": { "stroke": null } }
+      };
+
+      vegaEmbed("#vis-choropleth", spec, { actions: false });
+    });
 }
