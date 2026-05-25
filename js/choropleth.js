@@ -1,4 +1,3 @@
-// Maps state abbreviations in schools data to full names in GeoJSON
 const STATE_NAME_MAP = {
   "NSW": "New South Wales",
   "VIC": "Victoria",
@@ -11,7 +10,6 @@ const STATE_NAME_MAP = {
 };
 
 function renderChoropleth() {
-  // Count schools per full state name
   const counts = {};
   Object.values(STATE_NAME_MAP).forEach(name => counts[name] = 0);
   ALL_DATA.forEach(d => {
@@ -19,13 +17,12 @@ function renderChoropleth() {
     if (fullName) counts[fullName]++;
   });
 
-  // Merge counts + density into GeoJSON features
   const enrichedFeatures = STATE_FEATURES
     .filter(f => f.geometry !== null && counts[f.properties.STE_NAME21] !== undefined)
     .map(f => {
       const count    = counts[f.properties.STE_NAME21] || 0;
       const areaSqKm = f.properties.AREASQKM21 || 1;
-      const density  = (count / areaSqKm) * 1000; // schools per 1,000 km²
+      const density  = (count / areaSqKm) * 1000;
       return {
         ...f,
         properties: {
@@ -35,8 +32,6 @@ function renderChoropleth() {
         }
       };
     });
-
-  const maxDensity = Math.max(...enrichedFeatures.map(f => f.properties.school_density));
 
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -55,11 +50,12 @@ function renderChoropleth() {
         "field": "properties.school_density",
         "type": "quantitative",
         "scale": {
+          "type": "log",
           "scheme": "oranges",
-          "domain": [0, maxDensity]
+          "base": 10
         },
         "legend": {
-          "title": "Schools per 1,000 km²",
+          "title": "Schools per 1,000 km² (log scale)",
           "titleColor": "#3a2a10",
           "labelColor": "#3a2a10",
           "titleFontSize": 11,
