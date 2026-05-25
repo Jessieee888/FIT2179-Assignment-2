@@ -28,7 +28,7 @@ function renderChoropleth() {
       return { ...f, properties: { ...f.properties, school_count: count, school_density: density } };
     });
 
-  // Rank-based quintile colour assignment in JS — bypasses Vega-Lite scale entirely
+  // Rank-based quintile colour assignment in JS, bypasses Vega-Lite scale entirely
   const RAMP = ["#fef0e6", "#fdd0a2", "#fdae6b", "#e6550d", "#a63603"];
   const sorted = features.map(f => f.properties.school_density).sort((a, b) => a - b);
 
