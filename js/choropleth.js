@@ -19,7 +19,6 @@ function renderChoropleth() {
   fetch("data/state_boundaries.json")
     .then(r => r.json())
     .then(geojson => {
-      // Inject density into each feature's properties
       const features = geojson.features
         .filter(f => stateInfo[f.properties.STE_NAME21])
         .map(f => {
@@ -58,17 +57,18 @@ function renderChoropleth() {
             }
           },
           {
-            "data": {
-              "values": features
-            },
+            "data": { "values": features },
             "mark": { "type": "geoshape", "stroke": "#f2ece0", "strokeWidth": 1 },
             "encoding": {
               "color": {
                 "field": "properties.density",
                 "type": "quantitative",
-                "scale": { "scheme": "oranges" },
+                "scale": {
+                  "type": "log",
+                  "scheme": "oranges"
+                },
                 "legend": {
-                  "title": "Schools per 1,000 km²",
+                  "title": "Schools per 1,000 km² (log scale)",
                   "labelColor": "#3a2a10",
                   "titleColor": "#3a2a10"
                 }
