@@ -9,8 +9,6 @@ const STATE_NAME_MAP = {
   "NT":  "Northern Territory"
 };
 
-const CHORO_RAMP = ["#fef0e6", "#fdd0a2", "#fdae6b", "#e6550d", "#a63603"];
-
 function renderChoropleth() {
   // Count schools per state
   const counts = {};
@@ -20,20 +18,15 @@ function renderChoropleth() {
     if (full) counts[full]++;
   });
 
-  // Compute density per feature
+  // Attach school_count at the TOP LEVEL of each feature (not nested under properties)
+  // so Vega-Lite can access it directly without dot-notation issues
   const features = STATE_FEATURES
     .filter(f => f.geometry !== null && counts[f.properties.STE_NAME21] !== undefined)
-    .map(f => {
-      const count   = counts[f.properties.STE_NAME21] || 0;
-      const area    = f.properties.AREASQKM21 || 1;
-      const density = Math.round((count / area * 1000) * 100) / 100;
-      return { ...f, properties: { ...f.properties, school_count: count, school_density: density } };
-    });
-
-  // For the legend
-  const densities = features.map(f => f.properties.school_density).sort((a, b) => a - b);
-  const minD = densities[0];
-  const maxD = densities[densities.length - 1];
+    .map(f => ({
+      ...f,
+      school_count: counts[f.properties.STE_NAME21] || 0,
+      state_name:   f.properties.STE_NAME21
+    }));
 
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -42,41 +35,36 @@ function renderChoropleth() {
     "background": "#f2ece0",
     "data": { "values": features },
     "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
-    "mark": { "type": "geoshape", "stroke": "#a89070", "strokeWidth": 0.8 },
+    "mark": {
+      "type": "geoshape",
+      "stroke": "#a89070",
+      "strokeWidth": 0.8
+    },
     "encoding": {
       "color": {
-        "field": "properties.school_density",
+        "field": "school_count",
         "type": "quantitative",
         "scale": {
-          "type": "sqrt",
-          "range": ["#fef0e6", "#fdd0a2", "#fdae6b", "#e6550d", "#a63603"]
+          "scheme": "oranges",
+          "domain": [0, 3500]
         },
-        "legend": null
+        "legend": {
+          "title": "Number of Schools",
+          "titleColor": "#3a2a10",
+          "labelColor": "#3a2a10",
+          "titleFontSize": 11,
+          "labelFontSize": 10,
+          "orient": "bottom-right",
+          "gradientLength": 140
+        }
       },
       "tooltip": [
-        { "field": "properties.STE_NAME21",     "title": "State",                 "type": "nominal" },
-        { "field": "properties.school_count",   "title": "Total Schools",         "type": "quantitative" },
-        { "field": "properties.school_density", "title": "Schools per 1,000 km²", "type": "quantitative" }
+        { "field": "state_name",   "title": "State",            "type": "nominal" },
+        { "field": "school_count", "title": "Number of Schools", "type": "quantitative" }
       ]
     },
     "config": { "view": { "stroke": null } }
   };
 
   vegaEmbed("#vis-choropleth", spec, { actions: false });
-
-  // Custom gradient legend
-  const existing = document.getElementById("choropleth-legend");
-  if (existing) existing.remove();
-
-  
-  const legend = document.createElement("div");
-  legend.id = "choropleth-legend";
-  legend.innerHTML = `
-    <span class="legend-label">Schools per 1,000 km² (density)</span>
-    <div class="choropleth-gradient"></div>
-    <div class="choropleth-legend-labels">
-      <span>${minD.toFixed(2)} — low</span>
-      <span>${maxD.toFixed(2)} — high</span>
-    </div>`;
-  document.getElementById("vis-choropleth").after(legend);
 }
