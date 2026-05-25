@@ -1,5 +1,4 @@
 function renderLollipop() {
-  // Calculate % of non-government schools per state
   const stateTotals = {};
   const statePrivate = {};
 
@@ -15,6 +14,26 @@ function renderLollipop() {
     Pct: parseFloat(((statePrivate[state] / stateTotals[state]) * 100).toFixed(1))
   }));
 
+  const sharedY = {
+    "field": "State",
+    "type": "nominal",
+    "sort": { "field": "Pct", "order": "descending" },
+    "axis": { "labelColor": "#3a2a10", "titleColor": "#3a2a10", "title": null }
+  };
+
+  const sharedX = {
+    "field": "Pct",
+    "type": "quantitative",
+    "scale": { "domainMin": 0 },
+    "axis": {
+      "labelColor": "#3a2a10",
+      "titleColor": "#3a2a10",
+      "title": "% Non-Government Schools",
+      "gridColor": "#d8ccb0",
+      "labelExpr": "datum.value + '%'"
+    }
+  };
+
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "width": "container",
@@ -23,44 +42,18 @@ function renderLollipop() {
     "data": { "values": values },
     "layer": [
       {
-        "mark": { "type": "rule", "color": "#c8b89a", "strokeWidth": 2 },
+        "mark": { "type": "rule", "color": "#a89070", "strokeWidth": 2 },
         "encoding": {
-          "y": {
-            "field": "State",
-            "type": "nominal",
-            "sort": { "field": "Pct", "order": "descending" },
-            "axis": { "labelColor": "#3a2a10", "titleColor": "#3a2a10", "title": null }
-          },
-          "x": {
-            "value": 0
-          },
-          "x2": {
-            "field": "Pct",
-            "type": "quantitative"
-          }
+          "y": sharedY,
+          "x": { "value": 0 },
+          "x2": sharedX
         }
       },
       {
         "mark": { "type": "circle", "size": 120, "color": "#5a3e8a" },
         "encoding": {
-          "y": {
-            "field": "State",
-            "type": "nominal",
-            "sort": { "field": "Pct", "order": "descending" },
-            "axis": { "labelColor": "#3a2a10", "titleColor": "#3a2a10", "title": null }
-          },
-          "x": {
-            "field": "Pct",
-            "type": "quantitative",
-            "axis": {
-              "labelColor": "#3a2a10",
-              "titleColor": "#3a2a10",
-              "title": "% Non-Government Schools",
-              "gridColor": "#d8ccb0",
-              "format": ".0f",
-              "labelExpr": "datum.value + '%'"
-            }
-          },
+          "y": sharedY,
+          "x": sharedX,
           "tooltip": [
             { "field": "State", "title": "State" },
             { "field": "Pct",   "title": "% Non-Government Schools" }
