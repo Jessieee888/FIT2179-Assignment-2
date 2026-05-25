@@ -34,6 +34,7 @@ fetch("data/schools.csv")
     renderHeatmap();
     renderGroupedBar();
     renderDonutChart();
+    renderDotStrip();
   });
 
 function applyFilters() {
