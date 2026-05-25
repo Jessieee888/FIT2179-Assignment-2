@@ -11,7 +11,8 @@ function renderLollipop() {
 
   const values = Object.keys(stateTotals).map(state => ({
     State: state,
-    Pct: parseFloat(((statePrivate[state] / stateTotals[state]) * 100).toFixed(1))
+    Pct: parseFloat(((statePrivate[state] / stateTotals[state]) * 100).toFixed(1)),
+    Zero: 0
   }));
 
   const sharedY = {
@@ -24,7 +25,7 @@ function renderLollipop() {
   const sharedX = {
     "field": "Pct",
     "type": "quantitative",
-    "scale": { "domainMin": 0 },
+    "scale": { "domainMin": 0, "domainMax": 40 },
     "axis": {
       "labelColor": "#3a2a10",
       "titleColor": "#3a2a10",
@@ -45,8 +46,13 @@ function renderLollipop() {
         "mark": { "type": "rule", "color": "#a89070", "strokeWidth": 2 },
         "encoding": {
           "y": sharedY,
-          "x": { "value": 0 },
-          "x2": sharedX
+          "x": {
+            "field": "Zero",
+            "type": "quantitative",
+            "scale": { "domainMin": 0, "domainMax": 40 },
+            "axis": null
+          },
+          "x2": { "field": "Pct", "type": "quantitative" }
         }
       },
       {
