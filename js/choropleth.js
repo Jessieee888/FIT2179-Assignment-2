@@ -50,18 +50,18 @@ function renderChoropleth() {
         "field": "properties.school_density",
         "type": "quantitative",
         "scale": {
-          "type": "log",
-          "scheme": "oranges",
-          "base": 10
+          "type": "quantile",
+          "range": ["#fef0e6", "#fdd0a2", "#fdae6b", "#e6550d", "#a63603"]
         },
         "legend": {
-          "title": "Schools per 1,000 km² (log scale)",
+          "title": "Schools per 1,000 km²",
           "titleColor": "#3a2a10",
           "labelColor": "#3a2a10",
           "titleFontSize": 11,
           "labelFontSize": 10,
           "orient": "bottom-right",
-          "gradientLength": 120
+          "gradientLength": 120,
+          "format": ".2f"
         }
       },
       "tooltip": [
