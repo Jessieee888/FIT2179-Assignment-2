@@ -154,7 +154,7 @@ body {
   padding: 0.8rem 2rem 0.3rem;
   border-top: 1px solid #c8b89a;
 }
-#vis, #vis-bar, #vis-grouped-bar, #vis-remote-bar, #vis-heatmap, #vis-donut-chart, #vis-dot-strip {
+#vis, #vis-bar, #vis-grouped-bar, #vis-remote-bar, #vis-heatmap, #vis-donut-chart, #vis-lollipop {
   width: 100%;
   min-height: 10px;
 }
