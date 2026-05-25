@@ -34,7 +34,6 @@ fetch("data/schools.csv")
     renderHeatmap();
     renderGroupedBar();
     renderDonutChart();
-    renderLollipop();
   });
 
 function applyFilters() {
@@ -88,6 +87,23 @@ function renderMap(data, colorField) {
         },
         "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
         "mark": { "type": "geoshape", "fill": "#e8dfc8", "stroke": "#a89070", "strokeWidth": 0.6 }
+      },
+      {
+        "data": {
+          "url": "data/state_boundaries.json",
+          "format": { "type": "json" }
+        },
+        "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
+        "mark": {
+          "type": "geoshape",
+          "fill": "transparent",
+          "stroke": "#7a5c30",
+          "strokeWidth": 1.2,
+          "strokeDash": [4, 2]
+        },
+        "encoding": {
+          "tooltip": [{ "field": "properties.STATE_NAME", "title": "State" }]
+        }
       },
       {
         "data": { "values": data },
