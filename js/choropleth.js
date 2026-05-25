@@ -1,18 +1,4 @@
-const STATE_NAME_MAP = {
-  "NSW": "New South Wales",
-  "VIC": "Victoria",
-  "QLD": "Queensland",
-  "WA":  "Western Australia",
-  "SA":  "South Australia",
-  "TAS": "Tasmania",
-  "ACT": "Australian Capital Territory",
-  "NT":  "Northern Territory"
-};
-
-const CHORO_RAMP = ["#fef0e6", "#fdd0a2", "#fdae6b", "#e6550d", "#a63603"];
-
 function renderChoropleth() {
-  // Count schools per state
   const counts = {};
   Object.values(STATE_NAME_MAP).forEach(n => counts[n] = 0);
   ALL_DATA.forEach(d => {
@@ -20,7 +6,6 @@ function renderChoropleth() {
     if (full) counts[full]++;
   });
 
-  // Compute density per feature, filter to mainland states only
   let features = STATE_FEATURES
     .filter(f => f.geometry !== null && counts[f.properties.STE_NAME21] !== undefined)
     .map(f => {
@@ -30,29 +15,42 @@ function renderChoropleth() {
       return { ...f, properties: { ...f.properties, school_count: count, school_density: density } };
     });
 
-  // Sort by density ascending, build explicit domain → color mapping
-  const sorted = [...features].sort((a, b) =>
-    a.properties.school_density - b.properties.school_density
-  );
+  // Use a log or capped scale so ACT doesn't blow out the color ramp
+  const densities = features.map(f => f.properties.school_density).sort((a, b) => a - b);
+  const p90 = densities[Math.floor(densities.length * 0.9)] || densities[densities.length - 1];
 
-  const colorDomain = sorted.map(f => f.properties.STE_NAME21);
-  const colorRange  = sorted.map((_, rank) =>
-    CHORO_RAMP[Math.min(Math.floor((rank / sorted.length) * CHORO_RAMP.length), CHORO_RAMP.length - 1)]
-  );
+  // Add a capped density for coloring purposes
+  features = features.map(f => ({
+    ...f,
+    properties: {
+      ...f.properties,
+      density_capped: Math.min(f.properties.school_density, p90)
+    }
+  }));
 
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "width": "container",
     "height": 480,
     "background": "#f2ece0",
-    "data": { "values": features },
-    "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
+    "data": {
+      "values": features,
+      "format": { "property": "features" }  // remove this line if features is already a flat array
+    },
+    "projection": {
+      "type": "mercator",
+      "center": [134, -28],
+      "scale": 700
+    },
     "mark": { "type": "geoshape", "stroke": "#a89070", "strokeWidth": 0.8 },
     "encoding": {
       "color": {
-        "field": "properties.STE_NAME21",
-        "type": "nominal",
-        "scale": { "domain": colorDomain, "range": colorRange },
+        "field": "properties.school_density",
+        "type": "quantitative",
+        "scale": {
+          "type": "sqrt",           // sqrt scale compresses the ACT outlier
+          "scheme": "oranges"
+        },
         "legend": null
       },
       "tooltip": [
@@ -66,12 +64,12 @@ function renderChoropleth() {
 
   vegaEmbed("#vis-choropleth", spec, { actions: false });
 
-  // Custom gradient legend
+  // Legend
   const existing = document.getElementById("choropleth-legend");
   if (existing) existing.remove();
 
-  const minD = sorted[0].properties.school_density;
-  const maxD = sorted[sorted.length - 1].properties.school_density;
+  const minD = densities[0];
+  const maxD = densities[densities.length - 1];
 
   const legend = document.createElement("div");
   legend.id = "choropleth-legend";
