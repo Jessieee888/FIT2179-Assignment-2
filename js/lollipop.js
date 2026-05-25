@@ -12,6 +12,7 @@ function renderLollipop() {
   const values = Object.keys(stateTotals).map(state => ({
     State: state,
     Pct: parseFloat(((statePrivate[state] / stateTotals[state]) * 100).toFixed(1)),
+    PctLabel: ((statePrivate[state] / stateTotals[state]) * 100).toFixed(1) + "%",
     Zero: 0
   }));
 
@@ -22,18 +23,7 @@ function renderLollipop() {
     "axis": { "labelColor": "#3a2a10", "titleColor": "#3a2a10", "title": null }
   };
 
-  const sharedX = {
-    "field": "Pct",
-    "type": "quantitative",
-    "scale": { "domainMin": 0, "domainMax": 40 },
-    "axis": {
-      "labelColor": "#3a2a10",
-      "titleColor": "#3a2a10",
-      "title": "% Non-Government Schools",
-      "gridColor": "#d8ccb0",
-      "labelExpr": "datum.value + '%'"
-    }
-  };
+  const sharedXScale = { "domainMin": 0, "domainMax": 40 };
 
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -43,27 +33,68 @@ function renderLollipop() {
     "data": { "values": values },
     "layer": [
       {
-        "mark": { "type": "rule", "color": "#a89070", "strokeWidth": 2 },
+        "mark": { "type": "rule", "strokeWidth": 2 },
         "encoding": {
           "y": sharedY,
           "x": {
             "field": "Zero",
             "type": "quantitative",
-            "scale": { "domainMin": 0, "domainMax": 40 },
+            "scale": sharedXScale,
             "axis": null
           },
-          "x2": { "field": "Pct", "type": "quantitative" }
+          "x2": { "field": "Pct", "type": "quantitative" },
+          "color": {
+            "field": "State",
+            "type": "nominal",
+            "scale": {
+              "domain": ["ACT","NSW","VIC","QLD","TAS","SA","WA","NT"],
+              "range": ["#5a3e8a","#2a6a8a","#1a6a40","#8a6a1a","#8a3e20","#e03e1a","#3a7ab5","#6a1a6a"]
+            },
+            "legend": null
+          }
         }
       },
       {
-        "mark": { "type": "circle", "size": 120, "color": "#5a3e8a" },
+        "mark": { "type": "circle", "size": 250 },
         "encoding": {
           "y": sharedY,
-          "x": sharedX,
+          "x": {
+            "field": "Pct",
+            "type": "quantitative",
+            "scale": sharedXScale,
+            "axis": {
+              "labelColor": "#3a2a10",
+              "titleColor": "#3a2a10",
+              "title": "% Non-Government Schools",
+              "gridColor": "#d8ccb0",
+              "labelExpr": "datum.value + '%'"
+            }
+          },
+          "color": {
+            "field": "State",
+            "type": "nominal",
+            "scale": {
+              "domain": ["ACT","NSW","VIC","QLD","TAS","SA","WA","NT"],
+              "range": ["#5a3e8a","#2a6a8a","#1a6a40","#8a6a1a","#8a3e20","#e03e1a","#3a7ab5","#6a1a6a"]
+            },
+            "legend": null
+          },
           "tooltip": [
-            { "field": "State", "title": "State" },
-            { "field": "Pct",   "title": "% Non-Government Schools" }
+            { "field": "State",    "title": "State" },
+            { "field": "PctLabel", "title": "% Non-Government Schools" }
           ]
+        }
+      },
+      {
+        "mark": { "type": "text", "align": "left", "dx": 10, "fontSize": 11, "fontStyle": "italic", "color": "#3a2a10" },
+        "encoding": {
+          "y": sharedY,
+          "x": {
+            "field": "Pct",
+            "type": "quantitative",
+            "scale": sharedXScale
+          },
+          "text": { "field": "PctLabel", "type": "nominal" }
         }
       }
     ],
