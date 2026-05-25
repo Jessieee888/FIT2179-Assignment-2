@@ -13,6 +13,19 @@ const COLORS = {
   }
 };
 
+// center [lon, lat] and scale per state
+const STATE_VIEW = {
+  "":    { center: [134, -28],    scale: 700  },
+  "NSW": { center: [146, -32],    scale: 1600 },
+  "VIC": { center: [144.5, -37], scale: 2400 },
+  "QLD": { center: [144, -22],    scale: 800  },
+  "WA":  { center: [122, -26],    scale: 560  },
+  "SA":  { center: [135.5, -30], scale: 870  },
+  "TAS": { center: [146.5, -42], scale: 3800 },
+  "ACT": { center: [149.1, -35.5], scale: 10000 },
+  "NT":  { center: [133.5, -20], scale: 870  }
+};
+
 let ALL_DATA = [];
 let STATE_FEATURES = [];
 
@@ -20,8 +33,6 @@ Promise.all([
   fetch("data/schools.csv").then(r => r.text()),
   fetch("data/state_boundaries.json").then(r => r.json())
 ]).then(([csvText, geoJson]) => {
-
-  // Parse schools CSV
   const lines = csvText.trim().split("\n");
   const headers = lines[0].split(",");
   ALL_DATA = lines.slice(1).map(line => {
@@ -33,7 +44,6 @@ Promise.all([
     return obj;
   });
 
-  // Store GeoJSON features
   STATE_FEATURES = geoJson.features;
 
   applyFilters();
@@ -59,7 +69,7 @@ function applyFilters() {
 
   updateStats(data);
   updateLegend(col);
-  renderMap(data, col);
+  renderMap(data, col, state);
 }
 
 function updateStats(data) {
@@ -81,8 +91,10 @@ function updateLegend(colorField) {
   ).join("");
 }
 
-function renderMap(data, colorField) {
+function renderMap(data, colorField, selectedState = "") {
   const c = COLORS[colorField];
+  const view = STATE_VIEW[selectedState] || STATE_VIEW[""];
+
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "width": "container",
@@ -94,12 +106,12 @@ function renderMap(data, colorField) {
           "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
           "format": { "type": "topojson", "feature": "countries" }
         },
-        "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
+        "projection": { "type": "mercator", "center": view.center, "scale": view.scale },
         "mark": { "type": "geoshape", "fill": "#e8dfc8", "stroke": "#a89070", "strokeWidth": 0.6 }
       },
       {
         "data": { "values": STATE_FEATURES },
-        "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
+        "projection": { "type": "mercator", "center": view.center, "scale": view.scale },
         "mark": {
           "type": "geoshape",
           "fill": "transparent",
@@ -113,7 +125,7 @@ function renderMap(data, colorField) {
       },
       {
         "data": { "values": data },
-        "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
+        "projection": { "type": "mercator", "center": view.center, "scale": view.scale },
         "mark": { "type": "circle", "opacity": 0.75, "size": 9 },
         "encoding": {
           "longitude": { "field": "Longitude", "type": "quantitative" },
