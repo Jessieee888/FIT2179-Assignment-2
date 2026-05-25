@@ -10,59 +10,48 @@ const STATE_NAME_MAP = {
 };
 
 function renderChoropleth() {
+  // Count schools per state
   const counts = {};
-  Object.values(STATE_NAME_MAP).forEach(name => counts[name] = 0);
+  Object.values(STATE_NAME_MAP).forEach(n => counts[n] = 0);
   ALL_DATA.forEach(d => {
-    const fullName = STATE_NAME_MAP[d["State"]];
-    if (fullName) counts[fullName]++;
+    const full = STATE_NAME_MAP[d["State"]];
+    if (full) counts[full]++;
   });
 
-  const enrichedFeatures = STATE_FEATURES
+  // Compute density per feature
+  let features = STATE_FEATURES
     .filter(f => f.geometry !== null && counts[f.properties.STE_NAME21] !== undefined)
     .map(f => {
-      const count    = counts[f.properties.STE_NAME21] || 0;
-      const areaSqKm = f.properties.AREASQKM21 || 1;
-      const density  = (count / areaSqKm) * 1000;
-      return {
-        ...f,
-        properties: {
-          ...f.properties,
-          school_count:   count,
-          school_density: Math.round(density * 100) / 100
-        }
-      };
+      const count   = counts[f.properties.STE_NAME21] || 0;
+      const area    = f.properties.AREASQKM21 || 1;
+      const density = Math.round((count / area * 1000) * 100) / 100;
+      return { ...f, properties: { ...f.properties, school_count: count, school_density: density } };
     });
+
+  // Rank-based quintile colour assignment in JS — bypasses Vega-Lite scale entirely
+  const RAMP = ["#fef0e6", "#fdd0a2", "#fdae6b", "#e6550d", "#a63603"];
+  const sorted = features.map(f => f.properties.school_density).sort((a, b) => a - b);
+
+  features = features.map(f => {
+    const rank     = sorted.indexOf(f.properties.school_density);
+    const colourIdx = Math.min(Math.floor((rank / sorted.length) * RAMP.length), RAMP.length - 1);
+    return { ...f, properties: { ...f.properties, fill_color: RAMP[colourIdx] } };
+  });
 
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "width": "container",
     "height": 480,
     "background": "#f2ece0",
-    "data": { "values": enrichedFeatures },
+    "data": { "values": features },
     "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
-    "mark": {
-      "type": "geoshape",
-      "stroke": "#a89070",
-      "strokeWidth": 0.8
-    },
+    "mark": { "type": "geoshape", "stroke": "#a89070", "strokeWidth": 0.8 },
     "encoding": {
       "color": {
-        "field": "properties.school_density",
-        "type": "quantitative",
-        "scale": {
-          "type": "quantile",
-          "range": ["#fef0e6", "#fdd0a2", "#fdae6b", "#e6550d", "#a63603"]
-        },
-        "legend": {
-          "title": "Schools per 1,000 km²",
-          "titleColor": "#3a2a10",
-          "labelColor": "#3a2a10",
-          "titleFontSize": 11,
-          "labelFontSize": 10,
-          "orient": "bottom-right",
-          "gradientLength": 120,
-          "format": ".2f"
-        }
+        "field": "properties.fill_color",
+        "type": "nominal",
+        "scale": null,
+        "legend": null
       },
       "tooltip": [
         { "field": "properties.STE_NAME21",     "title": "State",                 "type": "nominal" },
@@ -74,4 +63,22 @@ function renderChoropleth() {
   };
 
   vegaEmbed("#vis-choropleth", spec, { actions: false });
+
+  // Inject custom legend since Vega-Lite legend is bypassed
+  const minD = Math.min(...features.map(f => f.properties.school_density));
+  const maxD = Math.max(...features.map(f => f.properties.school_density));
+
+  const existing = document.getElementById("choropleth-legend");
+  if (existing) existing.remove();
+
+  const legend = document.createElement("div");
+  legend.id = "choropleth-legend";
+  legend.innerHTML = `
+    <span class="legend-label">Schools per 1,000 km²</span>
+    <div class="choropleth-gradient"></div>
+    <div class="choropleth-legend-labels">
+      <span>${minD.toFixed(2)} (low)</span>
+      <span>${maxD.toFixed(2)} (high)</span>
+    </div>`;
+  document.getElementById("vis-choropleth").after(legend);
 }

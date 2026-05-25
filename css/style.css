@@ -327,3 +327,25 @@ body {
   color: #6a5a40;
   margin-top: 0.2rem;
 }
+
+/* CHOROPLETH LEGEND */
+#choropleth-legend {
+  padding: 0.4rem 2rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.choropleth-gradient {
+  width: 200px;
+  height: 12px;
+  background: linear-gradient(to right, #fef0e6, #fdd0a2, #fdae6b, #e6550d, #a63603);
+  border-radius: 2px;
+}
+.choropleth-legend-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+  font-size: 0.7rem;
+  color: #6a5a40;
+  font-style: italic;
+}
