@@ -58,17 +58,18 @@ function renderChoropleth() {
           },
           {
             "data": { "values": features },
-            "mark": { "type": "geoshape", "stroke": "#f2ece0", "strokeWidth": 1 },
+            "mark": { "type": "geoshape", "stroke": "#f2ece0", "strokeWidth": 1.5 },
             "encoding": {
               "color": {
                 "field": "properties.density",
                 "type": "quantitative",
                 "scale": {
-                  "type": "log",
-                  "scheme": "oranges"
+                  "scheme": "oranges",
+                  "domainMin": 0,
+                  "domainMax": 5
                 },
                 "legend": {
-                  "title": "Schools per 1,000 km² (log scale)",
+                  "title": "Schools per 1,000 km²",
                   "labelColor": "#3a2a10",
                   "titleColor": "#3a2a10"
                 }
