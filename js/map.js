@@ -14,28 +14,36 @@ const COLORS = {
 };
 
 let ALL_DATA = [];
+let STATE_FEATURES = [];
 
-fetch("data/schools.csv")
-  .then(r => r.text())
-  .then(text => {
-    const lines = text.trim().split("\n");
-    const headers = lines[0].split(",");
-    ALL_DATA = lines.slice(1).map(line => {
-      const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
-      const obj = {};
-      headers.forEach((h, i) => {
-        obj[h] = cols[i] ? cols[i].replace(/^"|"$/g, "").trim() : "";
-      });
-      return obj;
+Promise.all([
+  fetch("data/schools.csv").then(r => r.text()),
+  fetch("data/state_boundaries.json").then(r => r.json())
+]).then(([csvText, geoJson]) => {
+
+  // Parse schools CSV
+  const lines = csvText.trim().split("\n");
+  const headers = lines[0].split(",");
+  ALL_DATA = lines.slice(1).map(line => {
+    const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
+    const obj = {};
+    headers.forEach((h, i) => {
+      obj[h] = cols[i] ? cols[i].replace(/^"|"$/g, "").trim() : "";
     });
-    applyFilters();
-    renderBar();
-    renderRemoteBar();
-    renderHeatmap();
-    renderGroupedBar();
-    renderDonutChart();
-    renderLollipop();
+    return obj;
   });
+
+  // Store GeoJSON features
+  STATE_FEATURES = geoJson.features;
+
+  applyFilters();
+  renderBar();
+  renderRemoteBar();
+  renderHeatmap();
+  renderGroupedBar();
+  renderDonutChart();
+  renderLollipop();
+});
 
 function applyFilters() {
   const sec   = document.getElementById("sel-sector").value;
@@ -90,10 +98,7 @@ function renderMap(data, colorField) {
         "mark": { "type": "geoshape", "fill": "#e8dfc8", "stroke": "#a89070", "strokeWidth": 0.6 }
       },
       {
-        "data": {
-          "url": "data/state_boundaries.json",
-          "format": { "type": "json", "property": "features" }
-        },
+        "data": { "values": STATE_FEATURES },
         "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
         "mark": {
           "type": "geoshape",
@@ -103,7 +108,7 @@ function renderMap(data, colorField) {
           "strokeDash": [4, 2]
         },
         "encoding": {
-          "tooltip": [{ "field": "properties.STATE_NAME", "title": "State", "type": "nominal" }]
+          "tooltip": [{ "field": "properties.STE_NAME21", "title": "State", "type": "nominal" }]
         }
       },
       {
