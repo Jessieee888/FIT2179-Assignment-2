@@ -34,6 +34,7 @@ fetch("data/schools.csv")
     renderHeatmap();
     renderGroupedBar();
     renderDonutChart();
+    renderLollipop();
   });
 
 function applyFilters() {
@@ -91,7 +92,7 @@ function renderMap(data, colorField) {
       {
         "data": {
           "url": "data/state_boundaries.json",
-          "format": { "type": "json" }
+          "format": { "type": "json", "property": "features" }
         },
         "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
         "mark": {
@@ -102,7 +103,7 @@ function renderMap(data, colorField) {
           "strokeDash": [4, 2]
         },
         "encoding": {
-          "tooltip": [{ "field": "properties.STATE_NAME", "title": "State" }]
+          "tooltip": [{ "field": "properties.STATE_NAME", "title": "State", "type": "nominal" }]
         }
       },
       {
