@@ -108,18 +108,18 @@
       </div>
     </div>
 
-    <!-- CHOROPLETH MAP -->
+    <!-- PROPORTIONAL SYMBOL MAP -->
     <div class="section-divider"></div>
     <div class="headline-section">
       <div class="kicker">By State &nbsp;&middot;&nbsp; School Density</div>
-      <h2 class="subheadline">The ACT Is Australia's Most School-Dense State by Far</h2>
-      <p class="deck">When school counts are adjusted for land area, the picture flips entirely. The ACT &mdash; tiny but urbanised &mdash; has by far the highest density of schools per square kilometre. Vast states like WA and Queensland, despite their large absolute counts, are sparsely covered relative to their size.</p>
+      <h2 class="subheadline">The ACT Punches Far Above Its Weight</h2>
+      <p class="deck">Adjusted for land area, the Australian Capital Territory is by far the most school-dense state in the country &mdash; a function of its tiny footprint and fully urban population. Circle size is proportional to the number of schools per 1,000 km&sup2;.</p>
     </div>
     <div class="map-wrap">
-      <div id="vis-choropleth"></div>
+      <div id="vis-prop-symbol"></div>
     </div>
     <div class="chart-footer">
-      <p class="chart-note">Schools per 1,000 km² &mdash; adjusted for state land area so large states are not unfairly dominant. Hover over each state to see both the density and total school count.</p>
+      <p class="chart-note">Circle area is proportional to school density (schools per 1,000 km&sup2;). Hover over any circle to see the state's total school count, land area, and density.</p>
     </div>
 
     <!-- STACKED BAR CHART -->
@@ -190,7 +190,7 @@
   <script src="js/grouped_bar.js"></script>
   <script src="js/donut_chart.js"></script>
   <script src="js/lollipop.js"></script>
-  <script src="js/choropleth.js"></script>
+  <script src="js/proportional_symbol.js"></script>
   <script src="js/map.js"></script>
 </body>
 </html>

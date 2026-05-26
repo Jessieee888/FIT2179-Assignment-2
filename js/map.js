@@ -53,7 +53,7 @@ Promise.all([
   renderGroupedBar();
   renderDonutChart();
   renderLollipop();
-  renderChoropleth();
+  renderPropSymbol();
 });
 
 function applyFilters() {
