@@ -54,9 +54,9 @@ Promise.all([
   renderDonutChart();
   renderLollipop();
   renderPropSymbol();
-  renderDivergingBar();
-  renderLineChart();
   renderSmallMultiples();
+  renderAreaChart();
+  renderDivergingBar();
 });
 
 function applyFilters() {
@@ -152,5 +152,44 @@ function renderMap(data, colorField, selectedState = "") {
     ],
     "config": { "view": { "stroke": null } }
   };
-  vegaEmbed("#vis", spec, { actions: false });
+  vegaEmbed("#vis", spec, { actions: false }).then(() => {
+    // Remove old annotations
+    document.querySelectorAll(".map-annotation").forEach(el => el.remove());
+
+    // Only show annotations on full Australia view
+    if (selectedState !== "") return;
+
+    const annotations = [
+      {
+        left: "71%", top: "60%",
+        text: "Schools crowd the southeast coast",
+        align: "right"
+      },
+      {
+        left: "24%", top: "53%",
+        text: "Perth — isolated from the east",
+        align: "left"
+      },
+      {
+        left: "46%", top: "10%",
+        text: "NT schools trace the highway south",
+        align: "left"
+      },
+      {
+        left: "46%", top: "40%",
+        text: "Vast interior — almost no schools",
+        align: "left"
+      }
+    ];
+
+    const container = document.getElementById("vis");
+    annotations.forEach(a => {
+      const div = document.createElement("div");
+      div.className = "map-annotation map-annotation--" + a.align;
+      div.style.left = a.left;
+      div.style.top  = a.top;
+      div.innerHTML  = `<span class="map-annotation-dot"></span><span class="map-annotation-text">${a.text}</span>`;
+      container.appendChild(div);
+    });
+  });
 }
