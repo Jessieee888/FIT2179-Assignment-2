@@ -100,6 +100,6 @@ function renderLineChart() {
         "config": { "view": { "stroke": null } }
       };
 
-      vegaEmbed("#vis-area", spec, { actions: false });
+      vegaEmbed("#vis-line-chart", spec, { actions: false });
     });
 }
