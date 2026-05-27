@@ -155,7 +155,7 @@ body {
   border-top: 1px solid #c8b89a;
 }
 #vis, #vis-bar, #vis-grouped-bar, #vis-remote-bar, #vis-heatmap,
-#vis-lollipop, #vis-prop-symbol, #vis-diverging-bar, #vis-area, #vis-small-multiples {
+#vis-lollipop, #vis-prop-symbol, #vis-diverging-bar, #vis-line-chart, #vis-small-multiples {
   width: 100%;
   min-height: 10px;
 }
