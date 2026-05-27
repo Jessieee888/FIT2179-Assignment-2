@@ -12,7 +12,6 @@ function renderSmallMultiples() {
         return obj;
       });
 
-      // Abbreviate state names for panel headers
       const ABBR = {
         "New South Wales": "NSW", "Victoria": "VIC",
         "Queensland": "QLD", "Western Australia": "WA",
@@ -20,7 +19,6 @@ function renderSmallMultiples() {
         "Australian Capital Territory": "ACT", "Northern Territory": "NT"
       };
 
-      // Sort states by total 2025 school count descending
       const STATE_ORDER = ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"];
 
       const data = rows
@@ -36,6 +34,11 @@ function renderSmallMultiples() {
           sector: r["School sector"],
           count:  +r["School count"].replace(/,/g, "")
         }));
+
+      const colorScale = {
+        "domain": ["Government", "Catholic", "Independent"],
+        "range":  ["#5a3e8a", "#e03e1a", "#1a6a40"]
+      };
 
       const spec = {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -56,11 +59,11 @@ function renderSmallMultiples() {
           }
         },
         "spec": {
-          "width": 175,
-          "height": 130,
+          "width": 160,
+          "height": 120,
           "layer": [
             {
-              "mark": { "type": "area", "opacity": 0.08 },
+              "mark": { "type": "area", "opacity": 0.12 },
               "encoding": {
                 "x": {
                   "field": "year", "type": "quantitative",
@@ -74,15 +77,13 @@ function renderSmallMultiples() {
                 },
                 "color": {
                   "field": "sector", "type": "nominal",
-                  "scale": {
-                    "domain": ["Government", "Catholic", "Independent"],
-                    "range":  ["#5a3e8a", "#e03e1a", "#1a6a40"]
-                  }
+                  "scale": colorScale,
+                  "legend": null
                 }
               }
             },
             {
-              "mark": { "type": "line", "strokeWidth": 1.8 },
+              "mark": { "type": "line", "strokeWidth": 2 },
               "encoding": {
                 "x": {
                   "field": "year", "type": "quantitative",
@@ -105,7 +106,7 @@ function renderSmallMultiples() {
                   "axis": {
                     "labelColor": "#6a5a40",
                     "labelFontSize": 8,
-                    "tickCount": 4,
+                    "tickCount": 3,
                     "format": ",.0f",
                     "grid": true,
                     "gridColor": "#d8ccb0",
@@ -116,10 +117,7 @@ function renderSmallMultiples() {
                 },
                 "color": {
                   "field": "sector", "type": "nominal",
-                  "scale": {
-                    "domain": ["Government", "Catholic", "Independent"],
-                    "range":  ["#5a3e8a", "#e03e1a", "#1a6a40"]
-                  },
+                  "scale": colorScale,
                   "legend": {
                     "title": "Sector",
                     "titleColor": "#3a2a10",
@@ -127,8 +125,7 @@ function renderSmallMultiples() {
                     "titleFontSize": 11,
                     "labelFontSize": 10,
                     "orient": "bottom",
-                    "direction": "horizontal",
-                    "columns": 3
+                    "direction": "horizontal"
                   }
                 },
                 "tooltip": [
@@ -141,10 +138,8 @@ function renderSmallMultiples() {
             }
           ]
         },
-        "resolve": {
-          "scale": { "y": "independent" }
-        },
-        "spacing": 20,
+        "resolve": { "scale": { "y": "independent" } },
+        "spacing": { "row": 24, "column": 16 },
         "config": {
           "view": { "stroke": "#e0d4bc" },
           "background": "#f2ece0"
