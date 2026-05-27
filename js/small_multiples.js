@@ -124,8 +124,8 @@ function renderSmallMultiples() {
                     "labelColor": "#3a2a10",
                     "titleFontSize": 11,
                     "labelFontSize": 10,
-                    "orient": "bottom",
-                    "direction": "horizontal"
+                    "orient": "right",
+                    "direction": "vertical"
                   }
                 },
                 "tooltip": [
