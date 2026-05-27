@@ -55,6 +55,7 @@ Promise.all([
   renderLollipop();
   renderPropSymbol();
   renderDivergingBar();
+  renderAreaChart();
 });
 
 function applyFilters() {
