@@ -48,7 +48,6 @@ function renderSmallMultiples() {
           "field": "state",
           "type": "nominal",
           "sort": STATE_ORDER,
-          "columns": 4,
           "header": {
             "title": null,
             "labelFontSize": 13,
@@ -58,6 +57,7 @@ function renderSmallMultiples() {
             "labelPadding": 6
           }
         },
+        "columns": 4,
         "spec": {
           "width": 160,
           "height": 120,
