@@ -67,8 +67,20 @@ function renderSmallMultiples() {
               "encoding": {
                 "x": {
                   "field": "year", "type": "quantitative",
-                  "axis": null,
-                  "scale": { "domain": [2001, 2025] }
+                  "scale": { "domain": [2001, 2025] },
+                  "axis": {
+                    "labelColor": "#6a5a40",
+                    "labelFontSize": 8,
+                    "values": [2001, 2010, 2025],
+                    "format": "d",
+                    "grid": false,
+                    "domain": true,
+                    "domainColor": "#c8b89a",
+                    "title": null,
+                    "labelAngle": 0,
+                    "tickColor": "#c8b89a",
+                    "tickSize": 4
+                  }
                 },
                 "y": {
                   "field": "count", "type": "quantitative",
@@ -88,19 +100,7 @@ function renderSmallMultiples() {
                 "x": {
                   "field": "year", "type": "quantitative",
                   "scale": { "domain": [2001, 2025] },
-                  "axis": {
-                    "labelColor": "#6a5a40",
-                    "labelFontSize": 8,
-                    "values": [2001, 2010, 2025],
-                    "format": "d",
-                    "grid": false,
-                    "domain": true,
-                    "domainColor": "#c8b89a",
-                    "title": null,
-                    "labelAngle": 0,
-                    "tickColor": "#c8b89a",
-                    "tickSize": 4
-                  }
+                  "axis": null
                 },
                 "y": {
                   "field": "count", "type": "quantitative",
