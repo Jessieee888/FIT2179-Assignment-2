@@ -129,6 +129,18 @@
       <h2 class="subheadline">Government Schools Dominate Every State</h2>
       <p class="deck">Across all eight states and territories, government schools make up the majority, but the share of Catholic and independent schools varies significantly by region.</p>
     </div>
+    <div class="type-filter-bar">
+      <span class="type-filter-label">Sector:</span>
+      <button class="type-btn type-btn--active" onclick="toggleSector('Government', this)">
+        <span class="type-btn-dot" style="background:#5a3e8a"></span>Government
+      </button>
+      <button class="type-btn type-btn--active" onclick="toggleSector('Catholic', this)">
+        <span class="type-btn-dot" style="background:#e03e1a"></span>Catholic
+      </button>
+      <button class="type-btn type-btn--active" onclick="toggleSector('Independent', this)">
+        <span class="type-btn-dot" style="background:#1a6a40"></span>Independent
+      </button>
+    </div>
     <div class="map-wrap">
       <div id="vis-bar"></div>
     </div>
