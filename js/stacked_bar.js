@@ -1,22 +1,19 @@
-let selectedSectors = new Set(["Government", "Catholic", "Independent"]);
+let selectedBarTypes = new Set(["Primary", "Secondary", "Combined"]);
 
-function toggleSector(sector, btn) {
-  if (selectedSectors.has(sector)) {
-    if (selectedSectors.size === 1) return;
-    selectedSectors.delete(sector);
+function toggleBarType(type, btn) {
+  if (selectedBarTypes.has(type)) {
+    if (selectedBarTypes.size === 1) return;
+    selectedBarTypes.delete(type);
     btn.classList.remove("type-btn--active");
   } else {
-    selectedSectors.add(sector);
+    selectedBarTypes.add(type);
     btn.classList.add("type-btn--active");
   }
   renderBar();
 }
 
 function renderBar() {
-  const filtered = ALL_DATA.filter(d => selectedSectors.has(d["School Sector"]));
-
-  const activeDomain = ["Government", "Catholic", "Independent"].filter(s => selectedSectors.has(s));
-  const colorMap = { "Government": "#5a3e8a", "Catholic": "#e03e1a", "Independent": "#1a6a40" };
+  const filtered = ALL_DATA.filter(d => selectedBarTypes.has(d["School Type"]));
 
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -42,14 +39,15 @@ function renderBar() {
         "field": "School Sector",
         "type": "nominal",
         "scale": {
-          "domain": activeDomain,
-          "range":  activeDomain.map(s => colorMap[s])
+          "domain": ["Government", "Catholic", "Independent"],
+          "range":  ["#5a3e8a", "#e03e1a", "#1a6a40"]
         },
         "legend": { "title": "Sector", "labelColor": "#3a2a10", "titleColor": "#3a2a10" }
       },
       "tooltip": [
         { "field": "State",         "title": "State" },
         { "field": "School Sector", "title": "Sector" },
+        { "field": "School Type",   "title": "Type" },
         { "aggregate": "count",     "title": "Number of Schools" }
       ]
     },
