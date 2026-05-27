@@ -161,7 +161,7 @@ function renderMap(data, colorField, selectedState = "") {
 
     const annotations = [
       {
-        left: "82%", top: "62%",
+        left: "112%", top: "62%",
         text: "Schools crowd the southeast coast",
         align: "right"
       }
