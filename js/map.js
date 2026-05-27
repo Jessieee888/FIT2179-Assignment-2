@@ -161,24 +161,9 @@ function renderMap(data, colorField, selectedState = "") {
 
     const annotations = [
       {
-        left: "71%", top: "60%",
+        left: "82%", top: "62%",
         text: "Schools crowd the southeast coast",
         align: "right"
-      },
-      {
-        left: "24%", top: "53%",
-        text: "Perth — isolated from the east",
-        align: "left"
-      },
-      {
-        left: "46%", top: "10%",
-        text: "NT schools trace the highway south",
-        align: "left"
-      },
-      {
-        left: "46%", top: "40%",
-        text: "Vast interior — almost no schools",
-        align: "left"
       }
     ];
 
