@@ -160,20 +160,16 @@ function renderMap(data, colorField, selectedState = "") {
     if (selectedState !== "") return;
 
     const annotations = [
-      {
-        left: "112%", top: "62%",
-        text: "Schools crowd the southeast coast",
-        align: "right"
-      }
+      { left: "80%", top: "55%", text: "Schools crowd the southeast coast" }
     ];
 
     const container = document.getElementById("vis");
     annotations.forEach(a => {
       const div = document.createElement("div");
-      div.className = "map-annotation map-annotation--" + a.align;
+      div.className = "map-annotation";
       div.style.left = a.left;
       div.style.top  = a.top;
-      div.innerHTML  = `<span class="map-annotation-dot"></span><span class="map-annotation-text">${a.text}</span>`;
+      div.innerHTML  = `<div class="map-annotation-bubble">${a.text}</div>`;
       container.appendChild(div);
     });
   });
