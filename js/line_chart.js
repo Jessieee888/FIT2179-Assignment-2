@@ -91,7 +91,7 @@ function renderLineChart() {
           {
             "mark": { "type": "text", "align": "left", "baseline": "top",
                       "dx": 5, "dy": 5, "fontSize": 9, "fontStyle": "italic", "color": "#8a4a00" },
-            "data": { "values": [{ "year": 2016, "label": "Independent growth accelerates" }] },
+            "data": { "values": [{ "year": 2016, "label": "Independent schools' growth accelerates" }] },
             "encoding": {
               "x": { "field": "year", "type": "ordinal" },
               "text": { "field": "label" }
