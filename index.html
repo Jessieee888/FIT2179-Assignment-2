@@ -140,6 +140,18 @@
       <h2 class="subheadline">Primary Schools Lead in Every State and Territory</h2>
       <p class="deck">Primary schools outnumber secondary and combined schools in every state, reflecting Australia's demographic spread. Combined schools &mdash; catering to both primary and secondary students &mdash; are especially common in smaller states and rural areas where student numbers are too low to sustain separate campuses.</p>
     </div>
+    <div class="type-filter-bar">
+      <span class="type-filter-label">Year level:</span>
+      <button class="type-btn type-btn--active" onclick="toggleSchoolType('Primary', this)">
+        <span class="type-btn-dot" style="background:#008b8b"></span>Primary &nbsp;<span class="type-btn-sub">Foundation–Yr 6/7</span>
+      </button>
+      <button class="type-btn type-btn--active" onclick="toggleSchoolType('Secondary', this)">
+        <span class="type-btn-dot" style="background:#ca8d7f"></span>Secondary &nbsp;<span class="type-btn-sub">Yr 7/8–12</span>
+      </button>
+      <button class="type-btn type-btn--active" onclick="toggleSchoolType('Combined', this)">
+        <span class="type-btn-dot" style="background:#1c1d87"></span>Combined &nbsp;<span class="type-btn-sub">Foundation–Yr 12</span>
+      </button>
+    </div>
     <div class="map-wrap">
       <div id="vis-grouped-bar"></div>
     </div>
