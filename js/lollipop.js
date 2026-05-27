@@ -16,6 +16,11 @@ function renderLollipop() {
     Zero: 0
   }));
 
+  // Compute national average from ALL_DATA
+  const totalSchools   = ALL_DATA.length;
+  const privateSchools = ALL_DATA.filter(d => d["School Sector"] !== "Government").length;
+  const nationalAvg    = parseFloat(((privateSchools / totalSchools) * 100).toFixed(1));
+
   const sharedY = {
     "field": "State",
     "type": "nominal",
@@ -95,6 +100,44 @@ function renderLollipop() {
             "scale": sharedXScale
           },
           "text": { "field": "PctLabel", "type": "nominal" }
+        }
+      },
+      {
+        "data": { "values": [{ "avg": nationalAvg }] },
+        "mark": {
+          "type": "rule",
+          "color": "#8a4a00",
+          "strokeWidth": 1.5,
+          "strokeDash": [5, 3],
+          "opacity": 0.8
+        },
+        "encoding": {
+          "x": {
+            "field": "avg",
+            "type": "quantitative",
+            "scale": sharedXScale
+          }
+        }
+      },
+      {
+        "data": { "values": [{ "avg": nationalAvg, "label": "National avg. " + nationalAvg + "%" }] },
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "dx": 4,
+          "dy": -6,
+          "fontSize": 9,
+          "fontStyle": "italic",
+          "color": "#8a4a00"
+        },
+        "encoding": {
+          "x": {
+            "field": "avg",
+            "type": "quantitative",
+            "scale": sharedXScale
+          },
+          "y": { "value": 8 },
+          "text": { "field": "label" }
         }
       }
     ],
