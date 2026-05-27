@@ -82,20 +82,6 @@ function renderSmallMultiples() {
           },
           "layer": [
             {
-              "mark": { "type": "area", "opacity": 0.12 },
-              "encoding": {
-                "y": {
-                  "field": "count", "type": "quantitative",
-                  "stack": null,
-                  "axis": null
-                },
-                "color": {
-                  "field": "sector", "type": "nominal",
-                  "scale": colorScale,
-                }
-              }
-            },
-            {
               "mark": { "type": "line", "strokeWidth": 2 },
               "encoding": {
                 "y": {
@@ -122,8 +108,8 @@ function renderSmallMultiples() {
                     "labelColor": "#3a2a10",
                     "titleFontSize": 11,
                     "labelFontSize": 10,
-                    "orient": "bottom",
-                    "direction": "horizontal"
+                    "orient": "right",
+                    "direction": "vertical"
                   }
                 },
                 "tooltip": [
@@ -132,6 +118,20 @@ function renderSmallMultiples() {
                   { "field": "year",   "title": "Year",    "type": "quantitative" },
                   { "field": "count",  "title": "Schools", "type": "quantitative", "format": "," }
                 ]
+              }
+            },
+            {
+              "mark": { "type": "area", "opacity": 0.12 },
+              "encoding": {
+                "y": {
+                  "field": "count", "type": "quantitative",
+                  "stack": null,
+                  "axis": null
+                },
+                "color": {
+                  "field": "sector", "type": "nominal",
+                  "scale": colorScale,
+                }
               }
             }
           ]
