@@ -129,6 +129,18 @@
       <h2 class="subheadline">Government Schools Dominate Every State</h2>
       <p class="deck">Across all eight states and territories, government schools make up the majority, but the share of Catholic and independent schools varies significantly by region.</p>
     </div>
+    <div class="type-filter-bar">
+      <span class="type-filter-label">Year level:</span>
+      <button class="type-btn type-btn--active" onclick="toggleBarType('Primary', this)">
+        <span class="type-btn-dot" style="background:#008b8b"></span>Primary &nbsp;<span class="type-btn-sub">Foundation&mdash;Yr 6/7</span>
+      </button>
+      <button class="type-btn type-btn--active" onclick="toggleBarType('Secondary', this)">
+        <span class="type-btn-dot" style="background:#ca8d7f"></span>Secondary &nbsp;<span class="type-btn-sub">Yr 7/8&mdash;12</span>
+      </button>
+      <button class="type-btn type-btn--active" onclick="toggleBarType('Combined', this)">
+        <span class="type-btn-dot" style="background:#1c1d87"></span>Combined &nbsp;<span class="type-btn-sub">Foundation&mdash;Yr 12</span>
+      </button>
+    </div>
     <div class="map-wrap">
       <div id="vis-bar"></div>
     </div>
@@ -143,13 +155,13 @@
     <div class="type-filter-bar">
       <span class="type-filter-label">Year level:</span>
       <button class="type-btn type-btn--active" onclick="toggleSchoolType('Primary', this)">
-        <span class="type-btn-dot" style="background:#008b8b"></span>Primary &nbsp;<span class="type-btn-sub">Foundation–Yr 6/7</span>
+        <span class="type-btn-dot" style="background:#008b8b"></span>Primary &nbsp;<span class="type-btn-sub">Foundation&mdash;Yr 6/7</span>
       </button>
       <button class="type-btn type-btn--active" onclick="toggleSchoolType('Secondary', this)">
-        <span class="type-btn-dot" style="background:#ca8d7f"></span>Secondary &nbsp;<span class="type-btn-sub">Yr 7/8–12</span>
+        <span class="type-btn-dot" style="background:#ca8d7f"></span>Secondary &nbsp;<span class="type-btn-sub">Yr 7/8&mdash;12</span>
       </button>
       <button class="type-btn type-btn--active" onclick="toggleSchoolType('Combined', this)">
-        <span class="type-btn-dot" style="background:#1c1d87"></span>Combined &nbsp;<span class="type-btn-sub">Foundation–Yr 12</span>
+        <span class="type-btn-dot" style="background:#1c1d87"></span>Combined &nbsp;<span class="type-btn-sub">Foundation&mdash;Yr 12</span>
       </button>
     </div>
     <div class="map-wrap">

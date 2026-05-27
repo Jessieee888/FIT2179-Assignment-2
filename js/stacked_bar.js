@@ -1,10 +1,26 @@
+let selectedBarTypes = new Set(["Primary", "Secondary", "Combined"]);
+
+function toggleBarType(type, btn) {
+  if (selectedBarTypes.has(type)) {
+    if (selectedBarTypes.size === 1) return;
+    selectedBarTypes.delete(type);
+    btn.classList.remove("type-btn--active");
+  } else {
+    selectedBarTypes.add(type);
+    btn.classList.add("type-btn--active");
+  }
+  renderBar();
+}
+
 function renderBar() {
+  const filtered = ALL_DATA.filter(d => selectedBarTypes.has(d["School Type"]));
+
   const spec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "width": "container",
     "height": 400,
     "background": "#f2ece0",
-    "data": { "values": ALL_DATA },
+    "data": { "values": filtered },
     "mark": { "type": "bar" },
     "encoding": {
       "x": {
@@ -31,6 +47,7 @@ function renderBar() {
       "tooltip": [
         { "field": "State",         "title": "State" },
         { "field": "School Sector", "title": "Sector" },
+        { "field": "School Type",   "title": "Type" },
         { "aggregate": "count",     "title": "Number of Schools" }
       ]
     },
