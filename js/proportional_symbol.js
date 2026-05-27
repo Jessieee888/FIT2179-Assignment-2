@@ -103,5 +103,15 @@ function renderPropSymbol() {
     "config": { "view": { "stroke": null } }
   };
 
-  vegaEmbed("#vis-prop-symbol", spec, { actions: false });
+  vegaEmbed("#vis-prop-symbol", spec, { actions: false }).then(() => {
+    const container = document.getElementById("vis-prop-symbol");
+    document.querySelectorAll("#vis-prop-symbol .map-annotation").forEach(el => el.remove());
+
+    const div = document.createElement("div");
+    div.className = "map-annotation";
+    div.style.left = "80%";
+    div.style.top  = "68%";
+    div.innerHTML  = `<div class="map-annotation-bubble">ACT: 91 schools per 1,000 km²<br><span style="font-size:0.62rem;opacity:0.8">Tiny area, fully urban, by far the densest</span></div>`;
+    container.appendChild(div);
+  });
 }
