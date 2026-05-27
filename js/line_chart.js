@@ -57,7 +57,8 @@ function renderLineChart() {
                   "gridDash": [3, 3],
                   "labelFontSize": 10,
                   "titleFontSize": 11,
-                  "format": ","
+                  "format": ",.0f",
+                  "formatType": "number"
                 }
               },
               "color": {
