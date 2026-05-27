@@ -100,7 +100,6 @@ function renderSmallMultiples() {
                 "x": {
                   "field": "year", "type": "quantitative",
                   "scale": { "domain": [2001, 2025] },
-                  "axis": null
                 },
                 "y": {
                   "field": "count", "type": "quantitative",
