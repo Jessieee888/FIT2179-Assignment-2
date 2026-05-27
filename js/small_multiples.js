@@ -131,6 +131,7 @@ function renderSmallMultiples() {
                 "color": {
                   "field": "sector", "type": "nominal",
                   "scale": colorScale,
+                  "legend": null
                 }
               }
             }
