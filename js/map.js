@@ -55,7 +55,7 @@ Promise.all([
   renderLollipop();
   renderPropSymbol();
   renderSmallMultiples();
-  renderAreaChart();
+  renderLineChart();
   renderDivergingBar();
 });
 
