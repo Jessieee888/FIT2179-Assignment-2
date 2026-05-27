@@ -140,6 +140,18 @@
       <h2 class="subheadline">Primary Schools Lead in Every State and Territory</h2>
       <p class="deck">Primary schools outnumber secondary and combined schools in every state, reflecting Australia's demographic spread. Combined schools &mdash; catering to both primary and secondary students &mdash; are especially common in smaller states and rural areas where student numbers are too low to sustain separate campuses.</p>
     </div>
+    <div class="type-filter-bar">
+      <span class="type-filter-label">Year level:</span>
+      <button class="type-btn type-btn--active" onclick="toggleSchoolType('Primary', this)">
+        <span class="type-btn-dot" style="background:#008b8b"></span>Primary &nbsp;<span class="type-btn-sub">Foundation&mdash;Yr 6/7</span>
+      </button>
+      <button class="type-btn type-btn--active" onclick="toggleSchoolType('Secondary', this)">
+        <span class="type-btn-dot" style="background:#ca8d7f"></span>Secondary &nbsp;<span class="type-btn-sub">Yr 7/8&mdash;12</span>
+      </button>
+      <button class="type-btn type-btn--active" onclick="toggleSchoolType('Combined', this)">
+        <span class="type-btn-dot" style="background:#1c1d87"></span>Combined &nbsp;<span class="type-btn-sub">Foundation&mdash;Yr 12</span>
+      </button>
+    </div>
     <div class="map-wrap">
       <div id="vis-grouped-bar"></div>
     </div>
@@ -172,7 +184,7 @@
       <p class="chart-note">Source: ACARA School Numbers Dataset 2001&ndash;2025. Y-axes are independently scaled per state &mdash; compare shapes of trends, not absolute values across panels. Hover any line to see exact counts.</p>
     </div>
 
-    <!-- LINE CHART -->
+    <!-- AREA CHART -->
     <div class="section-divider"></div>
     <div class="headline-section">
       <div class="kicker">2001&ndash;2025 &nbsp;&middot;&nbsp; Sector Growth</div>
@@ -180,7 +192,7 @@
       <p class="deck">While government school numbers fell through the 2000s before slowly recovering, independent schools have grown steadily for two decades &mdash; accelerating noticeably after 2015. Catholic schools have remained broadly stable. The overall picture is a slow but consistent shift away from government schooling.</p>
     </div>
     <div class="map-wrap">
-      <div id="vis-line-chart"></div>
+      <div id="vis-area"></div>
     </div>
     <div class="chart-footer">
       <p class="chart-note">Source: ACARA School Numbers Dataset 2001&ndash;2025. National totals only. Three lines, one per sector. Hover any point to see the exact school count for that year.</p>
@@ -234,7 +246,7 @@
   <script src="js/lollipop.js"></script>
   <script src="js/proportional_symbol.js"></script>
   <script src="js/small_multiples.js"></script>
-  <script src="js/line_chart.js"></script>
+  <script src="js/area_chart.js"></script>
   <script src="js/diverging_bar.js"></script>
   <script src="js/map.js"></script>
 </body>
