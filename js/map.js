@@ -56,6 +56,7 @@ Promise.all([
   renderPropSymbol();
   renderDivergingBar();
   renderLineChart();
+  renderSmallMultiples();
 });
 
 function applyFilters() {
