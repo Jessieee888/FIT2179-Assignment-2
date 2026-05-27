@@ -91,13 +91,15 @@ function renderSmallMultiples() {
                   "axis": {
                     "labelColor": "#6a5a40",
                     "labelFontSize": 8,
-                    "tickCount": 4,
+                    "values": [2001, 2010, 2025],
                     "format": "d",
                     "grid": false,
                     "domain": true,
                     "domainColor": "#c8b89a",
                     "title": null,
-                    "labelAngle": 0
+                    "labelAngle": 0,
+                    "tickColor": "#c8b89a",
+                    "tickSize": 4
                   }
                 },
                 "y": {
