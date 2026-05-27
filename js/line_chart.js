@@ -73,7 +73,8 @@ function renderLineChart() {
                   "labelColor": "#3a2a10",
                   "titleFontSize": 11,
                   "labelFontSize": 11,
-                  "orient": "top-right"
+                  "orient": "bottom",
+                  "direction": "horizontal"
                 }
               },
               "tooltip": [
