@@ -94,7 +94,7 @@ function renderDivergingBar() {
                 "field": "gender", "type": "nominal",
                 "scale": {
                   "domain": ["Female", "Male"],
-                  "range":  ["#5a3e8a", "#e03e1a"]
+                  "range": ["#f4a7b9", "#a8c8e8"]
                 },
                 "legend": {
                   "title": "Gender",
