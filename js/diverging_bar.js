@@ -69,8 +69,8 @@ function renderDivergingBar() {
       document.querySelectorAll("#vis-diverging-bar .map-annotation").forEach(el => el.remove());
 
       const annotations = [
-        { left: "80%", top: "10%", text: "The ACT has the widest gap" },
-        { left: "80%", top: "88%", text: "Tasmania has the narrowest gap" }
+        { left: "12%", top: "10%", text: "The ACT has the widest gap" },
+        { left: "70%", top: "84%", text: "Tasmania has the narrowest gap" }
       ];
 
       annotations.forEach(a => {
