@@ -1,0 +1,57 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 320,
+  "background": "#f2ece0",
+  "data": { "values": [] },
+  "layer": [
+    {
+      "mark": { "type": "bar", "height": 18 },
+      "encoding": {
+        "y": {
+          "field": "state", "type": "ordinal",
+          "sort": [],
+          "axis": {
+            "labelColor": "#3a2a10", "titleColor": "#3a2a10",
+            "title": null, "labelFontSize": 12, "labelFontStyle": "italic"
+          }
+        },
+        "x": {
+          "field": "x1", "type": "quantitative",
+          "scale": { "domain": [47.5, 52.5] },
+          "axis": {
+            "title": "Share of enrolments (%)",
+            "titleColor": "#3a2a10", "labelColor": "#3a2a10",
+            "gridColor": "#d8ccb0", "tickCount": 6,
+            "labelExpr": "datum.value + '%'"
+          }
+        },
+        "x2": { "field": "x2", "type": "quantitative" },
+        "color": {
+          "field": "gender", "type": "nominal",
+          "scale": {
+            "domain": ["Female", "Male"],
+            "range":  ["#f4a7b9", "#a8c8e8"]
+          },
+          "legend": {
+            "title": "Gender",
+            "titleColor": "#3a2a10", "labelColor": "#3a2a10",
+            "orient": "top-right", "labelFontSize": 11
+          }
+        },
+        "opacity": { "value": 0.82 },
+        "tooltip": [
+          { "field": "state",  "title": "State" },
+          { "field": "gender", "title": "Gender" },
+          { "field": "pct",    "title": "Share (%)",     "type": "quantitative", "format": ".2f" },
+          { "field": "count",  "title": "Student Count", "type": "quantitative", "format": "," }
+        ]
+      }
+    },
+    {
+      "mark": { "type": "rule", "color": "#1a1209", "strokeWidth": 1.5, "strokeDash": [4, 2] },
+      "encoding": { "x": { "datum": 50, "type": "quantitative" } }
+    }
+  ],
+  "config": { "view": { "stroke": null }, "axis": { "domain": false } }
+}
