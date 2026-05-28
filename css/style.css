@@ -453,3 +453,8 @@ body {
   border: 7px solid transparent;
   border-bottom: 9px solid rgba(242, 236, 224, 0.96);
 }
+
+/* DIVERGING BAR ANNOTATIONS */
+#vis-diverging-bar {
+  position: relative;
+}

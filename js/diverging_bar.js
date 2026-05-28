@@ -19,7 +19,6 @@ function renderDivergingBar() {
       return obj;
     });
 
-    // Filter: 2025, all sectors, all levels, all indigenous, all FT/PT, male/female only, no national total
     const filtered = rows.filter(r =>
       r["Calendar year"] === "2025" &&
       r["School sector"] === "All" &&
@@ -30,7 +29,6 @@ function renderDivergingBar() {
       ABBR[r["State/territory"]]
     );
 
-    // Aggregate male/female counts per state
     const stateCounts = {};
     filtered.forEach(r => {
       const abbr = ABBR[r["State/territory"]];
@@ -40,7 +38,6 @@ function renderDivergingBar() {
       if (r["Sex/gender"] === "Female") stateCounts[abbr].female += count;
     });
 
-    // Compute percentages and build flat array for chart
     const flat       = [];
     const stateOrder = [];
 
@@ -62,10 +59,28 @@ function renderDivergingBar() {
         flat.push({ state: d.state, gender: "Female", x1: d.female_pct, x2: 50,            pct: d.female_pct, count: d.female });
       });
 
-    // Inject data and dynamic state sort order
-    spec.data.values                      = flat;
-    spec.layer[0].encoding.y.sort         = stateOrder;
+    spec.data.values              = flat;
+    spec.layer[0].encoding.y.sort = stateOrder;
 
     return vegaEmbed("#vis-diverging-bar", spec, { actions: false });
+  }).then(() => {
+    setTimeout(() => {
+      const container = document.getElementById("vis-diverging-bar");
+      document.querySelectorAll("#vis-diverging-bar .map-annotation").forEach(el => el.remove());
+
+      const annotations = [
+        { left: "80%", top: "10%", text: "The ACT has the widest gap" },
+        { left: "80%", top: "88%", text: "Tasmania has the narrowest gap" }
+      ];
+
+      annotations.forEach(a => {
+        const div = document.createElement("div");
+        div.className  = "map-annotation";
+        div.style.left = a.left;
+        div.style.top  = a.top;
+        div.innerHTML  = `<div class="map-annotation-bubble">${a.text}</div>`;
+        container.appendChild(div);
+      });
+    }, 300);
   });
 }
