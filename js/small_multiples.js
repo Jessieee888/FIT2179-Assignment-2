@@ -45,7 +45,7 @@ function renderSmallMultiples() {
     const a1 = document.createElement("div");
     a1.className  = "map-annotation";
     a1.style.left = "4%";
-    a1.style.top  = "58%";
+    a1.style.top  = "30%";
     a1.innerHTML  = `<div class="map-annotation-bubble">SA govt. schools fell<br><span style="font-size:0.62rem;opacity:0.8">Steepest government decline of any state</span></div>`;
     container.appendChild(a1);
 
