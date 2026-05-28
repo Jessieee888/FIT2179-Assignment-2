@@ -53,7 +53,7 @@ function renderPropSymbol() {
 
       const div = document.createElement("div");
       div.className = "map-annotation";
-      div.style.left = "75%";
+      div.style.left = "73%";
       div.style.top  = "68%";
       div.innerHTML  = `<div class="map-annotation-bubble">ACT: 91 schools per 1,000 km²<br><span style="font-size:0.62rem;opacity:0.8">Tiny area, fully urban, by far the densest</span></div>`;
       container.appendChild(div);
