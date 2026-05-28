@@ -35,7 +35,7 @@ function renderLollipop() {
       const div = document.createElement("div");
       div.className  = "map-annotation map-annotation--up";
       div.style.left = "62%";
-      div.style.top  = "22%";
+      div.style.top  = "12%";
       div.innerHTML  = `<div class="map-annotation-bubble">ACT leads all states with the highest share<br><span style="font-size:0.62rem;opacity:0.8">More than 1 in 3 ACT schools are non-government</span></div>`;
       container.appendChild(div);
     });
