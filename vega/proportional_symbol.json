@@ -47,7 +47,7 @@
           "titleFontSize": 11,
           "labelFontSize": 10,
           "orient": "bottom-left",
-          "labelExpr": "datum.value >= 60 ? '\u2265' + datum.value : datum.value"
+          "labelExpr": "datum.value >= 60 ? '\u2265 ' + datum.value : datum.value"
         }
         },
         "color": { "value": "#e03e1a" },
