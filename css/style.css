@@ -421,3 +421,35 @@ body {
   color: #8a7a60;
   font-style: italic;
 }
+
+/* LOLLIPOP ANNOTATION — upward pointing tail */
+#vis-lollipop {
+  position: relative;
+}
+.map-annotation--up {
+  transform: translateX(-50%);
+}
+.map-annotation--up .map-annotation-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  right: unset;
+  top: unset;
+  border: 8px solid transparent;
+  border-bottom: 10px solid #8a4a00;
+}
+.map-annotation--up .map-annotation-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  right: unset;
+  top: unset;
+  margin-right: 0;
+  margin-bottom: -1.5px;
+  border: 7px solid transparent;
+  border-bottom: 9px solid rgba(242, 236, 224, 0.96);
+}

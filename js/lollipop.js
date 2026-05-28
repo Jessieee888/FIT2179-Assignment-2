@@ -16,7 +16,6 @@ function renderLollipop() {
     Zero:     0
   }));
 
-  // Compute national average from ALL_DATA
   const totalSchools   = ALL_DATA.length;
   const privateSchools = ALL_DATA.filter(d => d["School Sector"] !== "Government").length;
   const nationalAvg    = parseFloat(((privateSchools / totalSchools) * 100).toFixed(1));
@@ -27,7 +26,6 @@ function renderLollipop() {
       spec.data.values = values;
       spec.layer[3].data.values = [{ avg: nationalAvg }];
       spec.layer[4].data.values = [{ avg: nationalAvg, label: "National avg. " + nationalAvg + "%" }];
-
       return vegaEmbed("#vis-lollipop", spec, { actions: false });
     })
     .then(() => {
@@ -35,9 +33,9 @@ function renderLollipop() {
       document.querySelectorAll("#vis-lollipop .map-annotation").forEach(el => el.remove());
 
       const div = document.createElement("div");
-      div.className  = "map-annotation";
-      div.style.left = "72%";
-      div.style.top  = "7%";
+      div.className  = "map-annotation map-annotation--up";
+      div.style.left = "62%";
+      div.style.top  = "22%";
       div.innerHTML  = `<div class="map-annotation-bubble">ACT leads all states with the highest share<br><span style="font-size:0.62rem;opacity:0.8">More than 1 in 3 ACT schools are non-government</span></div>`;
       container.appendChild(div);
     });
