@@ -21,7 +21,7 @@ function renderLollipop() {
   const privateSchools = ALL_DATA.filter(d => d["School Sector"] !== "Government").length;
   const nationalAvg    = parseFloat(((privateSchools / totalSchools) * 100).toFixed(1));
 
-  fetch("data/lollipop.json")
+  fetch("vega/lollipop.json")
     .then(r => r.json())
     .then(spec => {
       // Inject main data

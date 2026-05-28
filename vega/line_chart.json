@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 380,
+  "background": "#f2ece0",
+  "data": { "values": [] },
+  "layer": [
+    {
+      "mark": { "type": "line", "strokeWidth": 2.5 },
+      "encoding": {
+        "x": {
+          "field": "year", "type": "ordinal",
+          "axis": {
+            "title": null,
+            "labelColor": "#3a2a10",
+            "labelAngle": 0,
+            "labelFontSize": 10,
+            "gridColor": "#d8ccb0",
+            "gridDash": [3, 3],
+            "labelExpr": "datum.value % 5 === 1 ? datum.value : ''"
+          }
+        },
+        "y": {
+          "field": "count", "type": "quantitative",
+          "axis": {
+            "title": "Number of Schools",
+            "titleColor": "#3a2a10",
+            "labelColor": "#3a2a10",
+            "gridColor": "#d8ccb0",
+            "gridDash": [3, 3],
+            "labelFontSize": 10,
+            "titleFontSize": 11,
+            "format": ",.0f",
+            "formatType": "number"
+          }
+        },
+        "color": {
+          "field": "sector", "type": "nominal",
+          "scale": {
+            "domain": ["Government", "Catholic", "Independent"],
+            "range":  ["#5a3e8a", "#e03e1a", "#1a6a40"]
+          },
+          "legend": {
+            "title": "Sector",
+            "titleColor": "#3a2a10",
+            "labelColor": "#3a2a10",
+            "titleFontSize": 11,
+            "labelFontSize": 11,
+            "orient": "right",
+            "direction": "vertical"
+          }
+        },
+        "tooltip": [
+          { "field": "year",   "title": "Year" },
+          { "field": "sector", "title": "Sector" },
+          { "field": "count",  "title": "Schools", "type": "quantitative", "format": "," }
+        ]
+      }
+    },
+    {
+      "data": { "values": [{ "year": 2016 }] },
+      "mark": { "type": "rule", "color": "#8a4a00", "strokeWidth": 1, "strokeDash": [4, 2], "opacity": 0.6 },
+      "encoding": { "x": { "field": "year", "type": "ordinal" } }
+    },
+    {
+      "data": { "values": [{ "year": 2016, "label": "Independent schools' growth accelerates" }] },
+      "mark": {
+        "type": "text", "align": "left", "baseline": "top",
+        "dx": 5, "dy": 5, "fontSize": 9, "fontStyle": "italic", "color": "#8a4a00"
+      },
+      "encoding": {
+        "x": { "field": "year", "type": "ordinal" },
+        "text": { "field": "label" }
+      }
+    }
+  ],
+  "config": { "view": { "stroke": null } }
+}

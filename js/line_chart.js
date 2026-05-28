@@ -1,7 +1,7 @@
 function renderLineChart() {
   Promise.all([
     fetch("data/school_numbers_dataset.csv").then(r => r.text()),
-    fetch("data/line_chart.json").then(r => r.json())
+    fetch("vega/line_chart.json").then(r => r.json())
   ]).then(([text, spec]) => {
     const lines   = text.trim().split("\n");
     const headers = lines[0].split(";");

@@ -38,7 +38,7 @@ function renderPropSymbol() {
     density:      Math.round(((counts[d.state] || 0) / (areas[d.state] || 1)) * 1000 * 100) / 100
   }));
 
-  fetch("data/proportional_symbol.json")
+  fetch("vega/proportional_symbol.json")
     .then(r => r.json())
     .then(spec => {
       // Inject live data into the two placeholder layers

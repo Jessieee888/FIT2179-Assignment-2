@@ -33,7 +33,7 @@ let MAP_SPEC_TEMPLATE = null; // cached after first fetch
 Promise.all([
   fetch("data/schools.csv").then(r => r.text()),
   fetch("data/state_boundaries.json").then(r => r.json()),
-  fetch("data/map.json").then(r => r.json())
+  fetch("vega/map.json").then(r => r.json())
 ]).then(([csvText, geoJson, mapSpec]) => {
   const lines   = csvText.trim().split("\n");
   const headers = lines[0].split(",");

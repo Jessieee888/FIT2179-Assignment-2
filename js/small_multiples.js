@@ -9,7 +9,7 @@ function renderSmallMultiples() {
   // Fetch CSV and spec in parallel
   Promise.all([
     fetch("data/school_numbers_dataset.csv").then(r => r.text()),
-    fetch("data/small_multiples.json").then(r => r.json())
+    fetch("vega/small_multiples.json").then(r => r.json())
   ]).then(([text, spec]) => {
     const lines   = text.trim().split("\n");
     const headers = lines[0].split(";");

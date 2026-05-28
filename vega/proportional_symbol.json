@@ -1,0 +1,63 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 520,
+  "background": "#f2ece0",
+  "layer": [
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
+        "format": { "type": "topojson", "feature": "countries" }
+      },
+      "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
+      "mark": { "type": "geoshape", "fill": "#e8dfc8", "stroke": "#a89070", "strokeWidth": 0.6 }
+    },
+    {
+      "data": { "values": [] },
+      "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
+      "mark": {
+        "type": "geoshape",
+        "fill": "transparent",
+        "stroke": "#7a5c30",
+        "strokeWidth": 1.0,
+        "strokeDash": [4, 2]
+      }
+    },
+    {
+      "data": { "values": [] },
+      "projection": { "type": "mercator", "center": [134, -28], "scale": 700 },
+      "mark": {
+        "type": "circle",
+        "opacity": 0.55,
+        "stroke": "#8a4a00",
+        "strokeWidth": 1,
+        "strokeOpacity": 0.8
+      },
+      "encoding": {
+        "longitude": { "field": "lon", "type": "quantitative" },
+        "latitude":  { "field": "lat", "type": "quantitative" },
+        "size": {
+          "field": "density",
+          "type": "quantitative",
+          "scale": { "type": "sqrt", "range": [80, 6000] },
+          "legend": {
+            "title": "Schools per 1,000 km²",
+            "titleColor": "#3a2a10",
+            "labelColor": "#3a2a10",
+            "titleFontSize": 11,
+            "labelFontSize": 10,
+            "orient": "bottom-left"
+          }
+        },
+        "color": { "value": "#e03e1a" },
+        "tooltip": [
+          { "field": "state",        "title": "State" },
+          { "field": "school_count", "title": "Total Schools",         "type": "quantitative" },
+          { "field": "area_km2",     "title": "Area (km²)",            "type": "quantitative", "format": "," },
+          { "field": "density",      "title": "Schools per 1,000 km²", "type": "quantitative" }
+        ]
+      }
+    }
+  ],
+  "config": { "view": { "stroke": null } }
+}
