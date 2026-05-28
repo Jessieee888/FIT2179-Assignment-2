@@ -48,13 +48,5 @@ function renderSmallMultiples() {
     a1.style.top  = "70%";
     a1.innerHTML  = `<div class="map-annotation-bubble">SA govt. schools fell<br><span style="font-size:0.62rem;opacity:0.8">Steepest government decline of any state</span></div>`;
     container.appendChild(a1);
-
-    // Annotation 2: ACT Catholic spike row 2, col 3
-    const a2 = document.createElement("div");
-    a2.className  = "map-annotation";
-    a2.style.left = "51%";
-    a2.style.top  = "70%";
-    a2.innerHTML  = `<div class="map-annotation-bubble">ACT Catholic schools nearly doubled after 2013<br><span style="font-size:0.62rem;opacity:0.8">Unique among all states and territories</span></div>`;
-    container.appendChild(a2);
   });
 }
