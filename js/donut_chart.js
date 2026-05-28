@@ -11,9 +11,8 @@ function renderDonutChart() {
   fetch("data/donut_chart.json")
     .then(r => r.json())
     .then(spec => {
-      // Inject the live aggregated data into the spec
+      // Inject live aggregated data into the spec
       spec.data.values = counts;
-
       return vegaEmbed("#vis-donut", spec, { actions: false });
     })
     .then(() => {

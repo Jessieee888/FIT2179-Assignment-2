@@ -14,10 +14,7 @@
         "cornerRadius": 3
       },
       "encoding": {
-        "theta": {
-          "field": "count",
-          "type": "quantitative"
-        },
+        "theta": { "field": "count", "type": "quantitative" },
         "color": {
           "field": "sector",
           "type": "nominal",
@@ -34,7 +31,5 @@
       }
     }
   ],
-  "config": {
-    "view": { "stroke": null }
-  }
+  "config": { "view": { "stroke": null } }
 }
