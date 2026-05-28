@@ -485,3 +485,45 @@ body {
 #vis-small-multiples {
   position: relative;
 }
+
+/* SOURCES */
+.sources-bar {
+  padding: 0.7rem 2rem;
+  border-top: 1px solid #c8b89a;
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+.sources-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #6a5a40;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.sources-list {
+  list-style: decimal;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.sources-list li {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: #5a4a30;
+  line-height: 1.5;
+}
+.sources-list a {
+  color: #5a4a30;
+  text-decoration: underline;
+  text-decoration-color: #c8b89a;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+.sources-list a:hover {
+  color: #8a4a00;
+  text-decoration-color: #8a4a00;
+}
