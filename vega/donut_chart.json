@@ -1,0 +1,35 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 260,
+  "height": 260,
+  "background": "transparent",
+  "data": { "values": [] },
+  "layer": [
+    {
+      "mark": {
+        "type": "arc",
+        "innerRadius": 72,
+        "outerRadius": 120,
+        "padAngle": 0.025,
+        "cornerRadius": 3
+      },
+      "encoding": {
+        "theta": { "field": "count", "type": "quantitative" },
+        "color": {
+          "field": "sector",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Government", "Catholic", "Independent"],
+            "range":  ["#5a3e8a", "#e03e1a", "#1a6a40"]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          { "field": "sector", "title": "Sector" },
+          { "field": "count",  "title": "Schools", "format": "," }
+        ]
+      }
+    }
+  ],
+  "config": { "view": { "stroke": null } }
+}

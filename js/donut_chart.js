@@ -8,7 +8,7 @@ function renderDonutChart() {
   }));
   const total = counts.reduce((s, d) => s + d.count, 0);
 
-  fetch("data/donut_chart.json")
+  fetch("vega/donut_chart.json")
     .then(r => r.json())
     .then(spec => {
       // Inject live aggregated data into the spec
