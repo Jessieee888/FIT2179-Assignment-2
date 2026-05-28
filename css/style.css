@@ -481,3 +481,7 @@ body {
   border: 7px solid transparent;
   border-left: 9px solid rgba(242, 236, 224, 0.96);
 }
+
+#vis-small-multiples {
+  position: relative;
+}
