@@ -38,15 +38,17 @@ function renderSmallMultiples() {
     return vegaEmbed("#vis-small-multiples", spec, { actions: false });
   })
   .then(() => {
-    const container = document.getElementById("vis-small-multiples");
-    document.querySelectorAll("#vis-small-multiples .map-annotation").forEach(el => el.remove());
+    // Defer annotation insertion until after Vega's ResizeObserver re-render pass
+    setTimeout(() => {
+      const container = document.getElementById("vis-small-multiples");
+      document.querySelectorAll("#vis-small-multiples .map-annotation").forEach(el => el.remove());
 
-    // Annotation 1: SA government decline row 2, col 1
-    const a1 = document.createElement("div");
-    a1.className  = "map-annotation";
-    a1.style.left = "4%";
-    a1.style.top  = "70%";
-    a1.innerHTML  = `<div class="map-annotation-bubble">SA govt. schools fell<br><span style="font-size:0.62rem;opacity:0.8">Steepest government decline of any state</span></div>`;
-    container.appendChild(a1);
+      const a1 = document.createElement("div");
+      a1.className  = "map-annotation";
+      a1.style.left = "4%";
+      a1.style.top  = "75%";
+      a1.innerHTML  = `<div class="map-annotation-bubble">SA govt. schools fell<br><span style="font-size:0.62rem;opacity:0.8">Steepest government decline of any state</span></div>`;
+      container.appendChild(a1);
+    }, 200);
   });
 }
