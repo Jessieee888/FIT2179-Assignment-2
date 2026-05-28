@@ -18,7 +18,7 @@ function renderGroupedBar() {
   const filtered      = ALL_DATA.filter(d => selectedSchoolTypes.has(d["School Type"]));
   const activeDomain  = ["Primary", "Secondary", "Combined"].filter(t => selectedSchoolTypes.has(t));
 
-  fetch("data/grouped_bar.json")
+  fetch("vega/grouped_bar.json")
     .then(r => r.json())
     .then(spec => {
       // Inject live data and dynamic color scale

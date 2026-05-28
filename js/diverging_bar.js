@@ -7,7 +7,7 @@ function renderDivergingBar() {
 
   Promise.all([
     fetch("data/student_numbers_dataset.csv").then(r => r.text()),
-    fetch("data/diverging_bar.json").then(r => r.json())
+    fetch("vega/diverging_bar.json").then(r => r.json())
   ]).then(([text, spec]) => {
     const lines   = text.trim().split("\n");
     const headers = lines[0].split(";");
