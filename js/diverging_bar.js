@@ -69,13 +69,13 @@ function renderDivergingBar() {
       document.querySelectorAll("#vis-diverging-bar .map-annotation").forEach(el => el.remove());
 
       const annotations = [
-        { left: "12%", top: "10%", text: "The ACT has the widest gap" },
-        { left: "70%", top: "84%", text: "Tasmania has the narrowest gap" }
+        { left: "8%", top: "10%", text: "The ACT has the widest gap", cls: "map-annotation map-annotation--right-tail" },
+        { left: "70%", top: "84%", text: "Tasmania has the narrowest gap", cls: "map-annotation" }
       ];
 
       annotations.forEach(a => {
         const div = document.createElement("div");
-        div.className  = "map-annotation";
+        div.className  = a.cls;
         div.style.left = a.left;
         div.style.top  = a.top;
         div.innerHTML  = `<div class="map-annotation-bubble">${a.text}</div>`;
