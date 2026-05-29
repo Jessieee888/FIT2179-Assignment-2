@@ -102,7 +102,7 @@ function renderMap(data, colorField, selectedState = "") {
   const c    = COLORS[colorField];
   const view = STATE_VIEW[selectedState] || STATE_VIEW[""];
 
-  // Deep clone so each call gets a fresh spec — never mutate MAP_SPEC_TEMPLATE directly
+  // Deep clone so each call gets a fresh spec never mutate MAP_SPEC_TEMPLATE directly
   const spec = JSON.parse(JSON.stringify(MAP_SPEC_TEMPLATE));
 
   // Inject projection into all three layers
@@ -112,7 +112,7 @@ function renderMap(data, colorField, selectedState = "") {
   spec.layer[2].projection = projection;
 
   // Inject data
-  spec.layer[1].data.values = STATE_FEATURES;
+  spec.layer[1].data.values = STATE_FEATURES.filter(f => f.properties.STE_NAME21 !== "Other Territories");
   spec.layer[2].data.values = data;
 
   // Inject dynamic color encoding

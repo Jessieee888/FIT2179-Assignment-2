@@ -42,7 +42,7 @@ function renderPropSymbol() {
     .then(r => r.json())
     .then(spec => {
       // Inject live data into the two placeholder layers
-      spec.layer[1].data.values = STATE_FEATURES.filter(f => f.geometry !== null);
+      spec.layer[1].data.values = STATE_FEATURES.filter(f => f.geometry !== null && f.properties.STE_NAME21 !== "Other Territories");
       spec.layer[2].data.values = symbolData;
 
       return vegaEmbed("#vis-prop-symbol", spec, { actions: false });
