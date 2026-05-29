@@ -130,8 +130,8 @@ function renderMap(data, colorField, selectedState = "") {
     const container = document.getElementById("vis");
     const div       = document.createElement("div");
     div.className   = "map-annotation";
-    div.style.left  = "80%";
-    div.style.top   = "55%";
+    div.style.left  = "70%";
+    div.style.top   = "65%";
     div.innerHTML   = `<div class="map-annotation-bubble">Schools crowd the southeast coast</div>`;
     container.appendChild(div);
   });
