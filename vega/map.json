@@ -20,7 +20,8 @@
         "fill": "transparent",
         "stroke": "#7a5c30",
         "strokeWidth": 1.2,
-        "strokeDash": [4, 2]
+        "strokeDash": [4, 2],
+        "tooltip": false
       },
       "encoding": {
         "tooltip": [{ "field": "properties.STE_NAME21", "title": "State", "type": "nominal" }]
