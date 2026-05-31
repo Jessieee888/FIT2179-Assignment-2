@@ -26,25 +26,28 @@ const STATE_VIEW = {
   "NT":  { center: [133.5, -18.5], scale: 1400 }
 };
 
-let ALL_DATA = [];
+let ALL_DATA      = [];
 let STATE_FEATURES = [];
+let MAP_SPEC_TEMPLATE = null; // cached after first fetch
 
 Promise.all([
   fetch("data/schools.csv").then(r => r.text()),
-  fetch("data/state_boundaries.json").then(r => r.json())
-]).then(([csvText, geoJson]) => {
-  const lines = csvText.trim().split("\n");
+  fetch("data/state_boundaries.json").then(r => r.json()),
+  fetch("vega/map.json").then(r => r.json())
+]).then(([csvText, geoJson, mapSpec]) => {
+  const lines   = csvText.trim().split("\n");
   const headers = lines[0].split(",");
   ALL_DATA = lines.slice(1).map(line => {
     const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
-    const obj = {};
+    const obj  = {};
     headers.forEach((h, i) => {
       obj[h] = cols[i] ? cols[i].replace(/^"|"$/g, "").trim() : "";
     });
     return obj;
   });
 
-  STATE_FEATURES = geoJson.features;
+  STATE_FEATURES        = geoJson.features;
+  MAP_SPEC_TEMPLATE     = mapSpec;
 
   applyFilters();
   renderBar();
@@ -96,81 +99,40 @@ function updateLegend(colorField) {
 }
 
 function renderMap(data, colorField, selectedState = "") {
-  const c = COLORS[colorField];
+  const c    = COLORS[colorField];
   const view = STATE_VIEW[selectedState] || STATE_VIEW[""];
 
-  const spec = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": "container",
-    "height": 520,
-    "background": "#f2ece0",
-    "layer": [
-      {
-        "data": {
-          "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
-          "format": { "type": "topojson", "feature": "countries" }
-        },
-        "projection": { "type": "mercator", "center": view.center, "scale": view.scale },
-        "mark": { "type": "geoshape", "fill": "#e8dfc8", "stroke": "#a89070", "strokeWidth": 0.6 }
-      },
-      {
-        "data": { "values": STATE_FEATURES },
-        "projection": { "type": "mercator", "center": view.center, "scale": view.scale },
-        "mark": {
-          "type": "geoshape",
-          "fill": "transparent",
-          "stroke": "#7a5c30",
-          "strokeWidth": 1.2,
-          "strokeDash": [4, 2]
-        },
-        "encoding": {
-          "tooltip": [{ "field": "properties.STE_NAME21", "title": "State", "type": "nominal" }]
-        }
-      },
-      {
-        "data": { "values": data },
-        "projection": { "type": "mercator", "center": view.center, "scale": view.scale },
-        "mark": { "type": "circle", "opacity": 0.75, "size": 9 },
-        "encoding": {
-          "longitude": { "field": "Longitude", "type": "quantitative" },
-          "latitude":  { "field": "Latitude",  "type": "quantitative" },
-          "color": {
-            "field": colorField,
-            "type": "nominal",
-            "scale": { "domain": c.domain, "range": c.range },
-            "legend": null
-          },
-          "tooltip": [
-            { "field": "School Name",             "title": "School" },
-            { "field": "School Sector",           "title": "Sector" },
-            { "field": "School Type",             "title": "Type" },
-            { "field": "State",                   "title": "State" },
-            { "field": "ABS Remoteness Area Name","title": "Remoteness" }
-          ]
-        }
-      }
-    ],
-    "config": { "view": { "stroke": null } }
-  };
+  // Deep clone so each call gets a fresh spec never mutate MAP_SPEC_TEMPLATE directly
+  const spec = JSON.parse(JSON.stringify(MAP_SPEC_TEMPLATE));
+
+  // Inject projection into all three layers
+  const projection = { "type": "mercator", "center": view.center, "scale": view.scale };
+  spec.layer[0].projection = projection;
+  spec.layer[1].projection = projection;
+  spec.layer[2].projection = projection;
+
+  // Inject data
+  spec.layer[1].data.values = STATE_FEATURES.filter(f => f.properties.STE_NAME21 !== "Other Territories");
+  spec.layer[2].data.values = data;
+
+  // Inject dynamic color encoding
+  spec.layer[2].encoding.color.field        = colorField;
+  spec.layer[2].encoding.color.scale.domain = c.domain;
+  spec.layer[2].encoding.color.scale.range  = c.range;
+
   vegaEmbed("#vis", spec, { actions: false }).then(() => {
     // Remove old annotations
     document.querySelectorAll(".map-annotation").forEach(el => el.remove());
 
-    // Only show annotations on full Australia view
+    // Only show annotation on full Australia view
     if (selectedState !== "") return;
 
-    const annotations = [
-      { left: "77%", top: "65%", text: "Schools crowd the southeast coast" }
-    ];
-
     const container = document.getElementById("vis");
-    annotations.forEach(a => {
-      const div = document.createElement("div");
-      div.className = "map-annotation";
-      div.style.left = a.left;
-      div.style.top  = a.top;
-      div.innerHTML  = `<div class="map-annotation-bubble">${a.text}</div>`;
-      container.appendChild(div);
-    });
+    const div       = document.createElement("div");
+    div.className   = "map-annotation";
+    div.style.left  = "77%";
+    div.style.top   = "65%";
+    div.innerHTML   = `<div class="map-annotation-bubble">Schools crowd the southeast coast</div>`;
+    container.appendChild(div);
   });
 }
