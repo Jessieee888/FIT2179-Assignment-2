@@ -15,15 +15,15 @@ const COLORS = {
 
 // center [lon, lat] and scale per state
 const STATE_VIEW = {
-  "":    { center: [134, -28],      scale: 700   },
-  "NSW": { center: [146, -32],      scale: 1600  },
-  "VIC": { center: [144.5, -37],   scale: 2400  },
-  "QLD": { center: [144, -22],      scale: 800   },
-  "WA":  { center: [122, -26],      scale: 560   },
-  "SA":  { center: [135.5, -30],   scale: 870   },
-  "TAS": { center: [146.5, -42],   scale: 3800  },
+  "":    { center: [134, -28],    scale: 700  },
+  "NSW": { center: [146, -32],    scale: 1600 },
+  "VIC": { center: [144.5, -37], scale: 2400 },
+  "QLD": { center: [145.5, -19.5], scale: 1100 },
+  "WA":  { center: [121.5, -24.5], scale: 980  },
+  "SA":  { center: [135.0, -32.0], scale: 1700 },
+  "TAS": { center: [146.5, -42], scale: 3800 },
   "ACT": { center: [149.1, -35.5], scale: 10000 },
-  "NT":  { center: [133.5, -20],   scale: 870   }
+  "NT":  { center: [133.5, -18.5], scale: 1400 }
 };
 
 let ALL_DATA      = [];
