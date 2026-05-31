@@ -160,7 +160,7 @@ function renderMap(data, colorField, selectedState = "") {
     if (selectedState !== "") return;
 
     const annotations = [
-      { left: "80%", top: "55%", text: "Schools crowd the southeast coast" }
+      { left: "77%", top: "65%", text: "Schools crowd the southeast coast" }
     ];
 
     const container = document.getElementById("vis");
