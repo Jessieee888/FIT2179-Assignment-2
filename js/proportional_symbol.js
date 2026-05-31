@@ -16,21 +16,18 @@ function renderPropSymbol() {
     "ACT": "Australian Capital Territory", "NT": "Northern Territory"
   };
 
-  // Count schools per state from ALL_DATA
   const counts = {};
   ALL_DATA.forEach(d => {
     const full = ABBR_MAP[d["State"]];
     if (full) counts[full] = (counts[full] || 0) + 1;
   });
 
-  // Get area from STATE_FEATURES
   const areas = {};
   STATE_FEATURES.forEach(f => {
     if (f.properties && f.properties.AREASQKM21)
       areas[f.properties.STE_NAME21] = f.properties.AREASQKM21;
   });
 
-  // Build symbol data: density = schools per 1,000 km²
   const symbolData = STATE_DATA.map(d => ({
     ...d,
     school_count: counts[d.state] || 0,
@@ -41,21 +38,21 @@ function renderPropSymbol() {
   fetch("vega/proportional_symbol.json")
     .then(r => r.json())
     .then(spec => {
-      // Inject live data into the two placeholder layers
       spec.layer[1].data.values = STATE_FEATURES.filter(f => f.geometry !== null && f.properties.STE_NAME21 !== "Other Territories");
       spec.layer[2].data.values = symbolData;
-
       return vegaEmbed("#vis-prop-symbol", spec, { actions: false });
     })
     .then(() => {
-      const container = document.getElementById("vis-prop-symbol");
-      document.querySelectorAll("#vis-prop-symbol .map-annotation").forEach(el => el.remove());
+      setTimeout(() => {
+        const container = document.getElementById("vis-prop-symbol");
+        document.querySelectorAll("#vis-prop-symbol .map-annotation").forEach(el => el.remove());
 
-      const div = document.createElement("div");
-      div.className = "map-annotation";
-      div.style.left = "77%";
-      div.style.top  = "68%";
-      div.innerHTML  = `<div class="map-annotation-bubble">ACT: 91 schools per 1,000 km²<br><span style="font-size:0.62rem;opacity:0.8">Tiny area, fully urban, by far the densest</span></div>`;
-      container.appendChild(div);
+        const div = document.createElement("div");
+        div.className  = "map-annotation";
+        div.style.left = "77%";
+        div.style.top  = "68%";
+        div.innerHTML  = `<div class="map-annotation-bubble">ACT: 91 schools per 1,000 km²<br><span style="font-size:0.62rem;opacity:0.8">Tiny area, fully urban, by far the densest</span></div>`;
+        container.appendChild(div);
+      }, 300);
     });
 }
