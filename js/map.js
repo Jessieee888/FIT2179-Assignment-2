@@ -122,7 +122,7 @@ function renderMap(data, colorField, selectedState = "") {
 
   vegaEmbed("#vis", spec, { actions: false }).then(() => {
     // Remove old annotations
-    document.querySelectorAll("vis .map-annotation").forEach(el => el.remove());
+    document.querySelectorAll(".map-annotation").forEach(el => el.remove());
 
     // Only show annotation on full Australia view
     if (selectedState !== "") return;
