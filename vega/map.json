@@ -1,51 +1,176 @@
-{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": "container",
-  "height": 520,
-  "background": "#f2ece0",
-  "layer": [
-    {
-      "data": {
-        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
-        "format": { "type": "topojson", "feature": "countries" }
-      },
-      "projection": {},
-      "mark": { "type": "geoshape", "fill": "#e8dfc8", "stroke": "#a89070", "strokeWidth": 0.6 }
-    },
-    {
-      "data": { "values": [] },
-      "projection": {},
-      "mark": {
-        "type": "geoshape",
-        "fill": "transparent",
-        "stroke": "#7a5c30",
-        "strokeWidth": 1.2,
-        "strokeDash": [4, 2],
-        "tooltip": false
-      }
-    },
-    {
-      "data": { "values": [] },
-      "projection": {},
-      "mark": { "type": "circle", "opacity": 0.75, "size": 9 },
-      "encoding": {
-        "longitude": { "field": "Longitude", "type": "quantitative" },
-        "latitude":  { "field": "Latitude",  "type": "quantitative" },
-        "color": {
-          "field": "",
-          "type": "nominal",
-          "scale": { "domain": [], "range": [] },
-          "legend": null
+const COLORS = {
+  "School Sector": {
+    domain: ["Government", "Catholic", "Independent"],
+    range:  ["#5a3e8a", "#e03e1a", "#1a6a40"]
+  },
+  "School Type": {
+    domain: ["Primary", "Secondary", "Combined"],
+    range:  ["#008b8b", "#ca8d7f", "#1c1d87"]
+  },
+  "ABS Remoteness Area Name": {
+    domain: ["Major Cities", "Inner Regional", "Outer Regional", "Remote", "Very Remote"],
+    range:  ["#4f83b5","#76a96b","#d98abc","#e8c981","#8a3f3f"]
+  }
+};
+
+// center [lon, lat] and scale per state
+const STATE_VIEW = {
+  "":    { center: [134, -28],    scale: 700  },
+  "NSW": { center: [146, -32],    scale: 1600 },
+  "VIC": { center: [144.5, -37], scale: 2400 },
+  "QLD": { center: [145.5, -19.5], scale: 1100 },
+  "WA":  { center: [121.5, -24.5], scale: 980  },
+  "SA":  { center: [135.0, -32.0], scale: 1700 },
+  "TAS": { center: [146.5, -42], scale: 3800 },
+  "ACT": { center: [149.1, -35.5], scale: 10000 },
+  "NT":  { center: [133.5, -18.5], scale: 1400 }
+};
+
+let ALL_DATA = [];
+let STATE_FEATURES = [];
+
+Promise.all([
+  fetch("data/schools.csv").then(r => r.text()),
+  fetch("data/state_boundaries.json").then(r => r.json())
+]).then(([csvText, geoJson]) => {
+  const lines = csvText.trim().split("\n");
+  const headers = lines[0].split(",");
+  ALL_DATA = lines.slice(1).map(line => {
+    const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
+    const obj = {};
+    headers.forEach((h, i) => {
+      obj[h] = cols[i] ? cols[i].replace(/^"|"$/g, "").trim() : "";
+    });
+    return obj;
+  });
+
+  STATE_FEATURES = geoJson.features;
+
+  applyFilters();
+  renderBar();
+  renderRemoteBar();
+  renderHeatmap();
+  renderGroupedBar();
+  renderDonutChart();
+  renderLollipop();
+  renderPropSymbol();
+  renderSmallMultiples();
+  renderLineChart();
+  renderDivergingBar();
+});
+
+function applyFilters() {
+  const sec   = document.getElementById("sel-sector").value;
+  const typ   = document.getElementById("sel-type").value;
+  const state = document.getElementById("sel-state").value;
+  const col   = document.getElementById("sel-color").value;
+
+  const data = ALL_DATA.filter(d =>
+    (!sec   || d["School Sector"] === sec)  &&
+    (!typ   || d["School Type"]   === typ)  &&
+    (!state || d["State"]         === state)
+  );
+
+  updateStats(data);
+  updateLegend(col);
+  renderMap(data, col, state);
+}
+
+function updateStats(data) {
+  document.getElementById("s-total").textContent = data.length.toLocaleString();
+  document.getElementById("s-gov").textContent   = data.filter(d => d["School Sector"] === "Government").length.toLocaleString();
+  document.getElementById("s-cath").textContent  = data.filter(d => d["School Sector"] === "Catholic").length.toLocaleString();
+  document.getElementById("s-ind").textContent   = data.filter(d => d["School Sector"] === "Independent").length.toLocaleString();
+}
+
+function updateLegend(colorField) {
+  const c = COLORS[colorField];
+  document.getElementById("legend-label").textContent =
+    colorField.charAt(0).toUpperCase() + colorField.slice(1);
+  document.getElementById("legend").innerHTML = c.domain.map((k, i) =>
+    `<div class="legend-item">
+       <div class="legend-dot" style="background:${c.range[i]}"></div>
+       ${k}
+     </div>`
+  ).join("");
+}
+
+function renderMap(data, colorField, selectedState = "") {
+  const c = COLORS[colorField];
+  const view = STATE_VIEW[selectedState] || STATE_VIEW[""];
+
+  const spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 520,
+    "background": "#f2ece0",
+    "layer": [
+      {
+        "data": {
+          "url": "https://cdn.jsdelivr.net/npm/vega-datasets@2/data/world-110m.json",
+          "format": { "type": "topojson", "feature": "countries" }
         },
-        "tooltip": [
-          { "field": "School Name",              "title": "School" },
-          { "field": "School Sector",            "title": "Sector" },
-          { "field": "School Type",              "title": "Type" },
-          { "field": "State",                    "title": "State" },
-          { "field": "ABS Remoteness Area Name", "title": "Remoteness" }
-        ]
+        "projection": { "type": "mercator", "center": view.center, "scale": view.scale },
+        "mark": { "type": "geoshape", "fill": "#e8dfc8", "stroke": "#a89070", "strokeWidth": 0.6 }
+      },
+      {
+        "data": { "values": STATE_FEATURES },
+        "projection": { "type": "mercator", "center": view.center, "scale": view.scale },
+        "mark": {
+          "type": "geoshape",
+          "fill": "transparent",
+          "stroke": "#7a5c30",
+          "strokeWidth": 1.2,
+          "strokeDash": [4, 2]
+        },
+        "encoding": {
+          "tooltip": [{ "field": "properties.STE_NAME21", "title": "State", "type": "nominal" }]
+        }
+      },
+      {
+        "data": { "values": data },
+        "projection": { "type": "mercator", "center": view.center, "scale": view.scale },
+        "mark": { "type": "circle", "opacity": 0.75, "size": 9 },
+        "encoding": {
+          "longitude": { "field": "Longitude", "type": "quantitative" },
+          "latitude":  { "field": "Latitude",  "type": "quantitative" },
+          "color": {
+            "field": colorField,
+            "type": "nominal",
+            "scale": { "domain": c.domain, "range": c.range },
+            "legend": null
+          },
+          "tooltip": [
+            { "field": "School Name",             "title": "School" },
+            { "field": "School Sector",           "title": "Sector" },
+            { "field": "School Type",             "title": "Type" },
+            { "field": "State",                   "title": "State" },
+            { "field": "ABS Remoteness Area Name","title": "Remoteness" }
+          ]
+        }
       }
-    }
-  ],
-  "config": { "view": { "stroke": null } }
+    ],
+    "config": { "view": { "stroke": null } }
+  };
+  vegaEmbed("#vis", spec, { actions: false }).then(() => {
+    // Remove old annotations
+    document.querySelectorAll(".map-annotation").forEach(el => el.remove());
+
+    // Only show annotations on full Australia view
+    if (selectedState !== "") return;
+
+    const annotations = [
+      { left: "80%", top: "55%", text: "Schools crowd the southeast coast" }
+    ];
+
+    const container = document.getElementById("vis");
+    annotations.forEach(a => {
+      const div = document.createElement("div");
+      div.className = "map-annotation";
+      div.style.left = a.left;
+      div.style.top  = a.top;
+      div.innerHTML  = `<div class="map-annotation-bubble">${a.text}</div>`;
+      container.appendChild(div);
+    });
+  });
 }
